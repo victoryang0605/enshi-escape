@@ -138,7 +138,7 @@ export default function App() {
                 Discover China's <br/>Hidden Paradise.
               </h1>
               <p className="text-[18px] text-[#666] mb-8 leading-[1.6] max-w-[480px]">
-                Experience the breathtaking landscapes and rich Tujia culture of Enshi with zero stress. We provide English-speaking guides, private transport, and end-to-end support for foreigners.
+                Experience the breathtaking landscapes and rich Tujia culture of Enshi with zero stress. Leave the noise behind. Step inot Cliffs, rivers, caves, and quiet wonder. We provide English-speaking guides, private transport, and end-to-end support for foreigners.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 lg:items-center">
                 <a href="#book" className="inline-flex justify-center items-center gap-2 bg-theme-primary text-white px-10 py-4 rounded-[4px] font-semibold hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(74,93,78,0.2)] hover:shadow-[0_4px_16px_rgba(74,93,78,0.3)]">

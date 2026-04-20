@@ -279,7 +279,7 @@ export default function App() {
             <div>
               <h4 className="font-sans font-bold text-white mb-6 uppercase text-[12px] tracking-[1px] opacity-80">Contact</h4>
               <ul className="space-y-4 text-[#aaa] text-[14px]">
-                <li>hello@enshiescapes.com</li>
+                <li>victoryang0605@gmail.com</li>
                 <li>Enshi City, Hubei Province</li>
                 <li>China</li>
               </ul>

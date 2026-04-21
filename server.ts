@@ -20,10 +20,23 @@ async function startServer() {
 
   const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
+  // Simple in-memory cache to prevent Notion API Rate Limits (429 Too Many Requests)
+  const cache = {
+    articlesList: { data: null as any, lastFetch: 0 },
+    articleContent: new Map<string, { data: string; lastFetch: number }>()
+  };
+  const CACHE_TTL = 10 * 60 * 1000; // 10 minutes in milliseconds
+
   // API endpoints
   app.get("/api/articles", async (req, res) => {
     if (!notion || !DATABASE_ID) {
       return res.json([]);
+    }
+
+    // Check Cache
+    if (cache.articlesList.data && (Date.now() - cache.articlesList.lastFetch < CACHE_TTL)) {
+      console.log("Serving articles from cache");
+      return res.json(cache.articlesList.data);
     }
 
     try {
@@ -45,6 +58,11 @@ async function startServer() {
         date: page.properties.Date?.date?.start || 'Unknown Date',
       }));
 
+      // Update Cache
+      cache.articlesList.data = articles;
+      cache.articlesList.lastFetch = Date.now();
+      console.log("Fetched articles from Notion & cached");
+
       res.json(articles);
     } catch (error) {
       console.error("Error fetching articles:", error);
@@ -58,10 +76,24 @@ async function startServer() {
     }
 
     const pageId = req.params.id;
+
+    // Check Cache
+    const cachedContent = cache.articleContent.get(pageId);
+    if (cachedContent && (Date.now() - cachedContent.lastFetch < CACHE_TTL)) {
+      console.log(`Serving article ${pageId} from cache`);
+      return res.json({ content: cachedContent.data });
+    }
+
     try {
       const mdblocks = await n2m.pageToMarkdown(pageId, 2);
       const mdString = n2m.toMarkdownString(mdblocks);
-      res.json({ content: mdString.parent || "" });
+      const content = mdString.parent || "";
+
+      // Update Cache
+      cache.articleContent.set(pageId, { data: content, lastFetch: Date.now() });
+      console.log(`Fetched article ${pageId} from Notion & cached`);
+
+      res.json({ content });
     } catch (error) {
       console.error("Error fetching article content:", error);
       res.status(500).json({ error: "Failed to fetch article content" });

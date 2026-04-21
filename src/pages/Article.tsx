@@ -1,14 +1,49 @@
-import { useParams, Navigate, Link } from 'react-router-dom';
+import { useParams, Navigate, Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { articles } from '../data/articles';
+import { useState, useEffect } from 'react';
+import { articles as localFallbackArticles } from '../data/articles';
+import { fetchArticleContent, fetchArticles } from '../services/notionService';
 
 export default function Article() {
   const { slug } = useParams();
-  const article = articles.find(a => a.slug === slug);
+  const [searchParams] = useSearchParams();
+  const pageId = searchParams.get('id');
 
-  if (!article) {
+  const [articleState, setArticleState] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      // 1. If we have a Notion ID in the URL, fetch from Notion API
+      if (pageId) {
+        try {
+           const allArticles = await fetchArticles();
+           const meta = allArticles.find((a: any) => a.id === pageId);
+           const mdbocy = await fetchArticleContent(pageId);
+           
+           if (meta) {
+             setArticleState({ ...meta, content: mdbocy });
+           } else {
+             // Fallback if metadata not found
+             setArticleState({ title: "Loading...", content: mdbocy });
+           }
+        } catch (e) {
+          console.error(e);
+        }
+      } 
+      // 2. Otherwise fall back to our local data file
+      else {
+        const local = localFallbackArticles.find(a => a.slug === slug);
+        setArticleState(local);
+      }
+      setIsLoading(false);
+    }
+    loadData();
+  }, [slug, pageId]);
+
+  if (!isLoading && !articleState) {
     // Redirect back to guide if article doesn't exist
     return <Navigate to="/enshi-travel-guide" />;
   }
@@ -16,8 +51,8 @@ export default function Article() {
   return (
     <>
       <Helmet>
-        <title>{article.title} | Enshi Travel Guide</title>
-        <meta name="description" content={article.excerpt} />
+        <title>{articleState?.title ? `${articleState.title} | Enshi Travel Guide` : 'Enshi Travel Guide'}</title>
+        {articleState?.excerpt && <meta name="description" content={articleState.excerpt} />}
       </Helmet>
 
       <article className="pt-20 pb-24 bg-theme-bg min-h-screen">
@@ -27,30 +62,44 @@ export default function Article() {
             <ArrowLeft className="w-4 h-4" /> Back to Travel Guide
           </Link>
 
-          <header className="mb-12 border-b border-[#eee] pb-8">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="text-[11px] uppercase tracking-[1px] font-bold text-theme-accent bg-white shadow-sm border border-[#eee] px-3 py-1 rounded-[4px]">
-                {article.category}
-              </span>
-              <span className="text-[#999] text-[13px] font-serif italic">
-                {article.date}
-              </span>
+          {isLoading ? (
+            <div className="text-center py-20 text-[#666]">
+               Loading article content...
             </div>
-            
-            <h1 className="text-4xl md:text-5xl font-serif text-theme-primary leading-[1.2] mb-6">
-              {article.title}
-            </h1>
-            
-            <p className="text-[18px] text-[#666] leading-[1.6]">
-              {article.excerpt}
-            </p>
-          </header>
+          ) : (
+            <>
+              <header className="mb-12 border-b border-[#eee] pb-8">
+                <div className="flex items-center gap-4 mb-6">
+                  {articleState.category && (
+                    <span className="text-[11px] uppercase tracking-[1px] font-bold text-theme-accent bg-white shadow-sm border border-[#eee] px-3 py-1 rounded-[4px]">
+                      {articleState.category}
+                    </span>
+                  )}
+                  {articleState.date && (
+                    <span className="text-[#999] text-[13px] font-serif italic">
+                      {articleState.date}
+                    </span>
+                  )}
+                </div>
+                
+                <h1 className="text-4xl md:text-5xl font-serif text-theme-primary leading-[1.2] mb-6">
+                  {articleState.title}
+                </h1>
+                
+                {articleState.excerpt && (
+                  <p className="text-[18px] text-[#666] leading-[1.6]">
+                    {articleState.excerpt}
+                  </p>
+                )}
+              </header>
 
-          <div className="markdown-body prose prose-lg prose-headings:font-serif prose-headings:text-theme-primary prose-a:text-theme-accent prose-p:text-[#444] leading-[1.8]">
-            <ReactMarkdown>
-              {article.content}
-            </ReactMarkdown>
-          </div>
+              <div className="markdown-body prose prose-lg prose-headings:font-serif prose-headings:text-theme-primary prose-a:text-theme-accent prose-p:text-[#444] leading-[1.8]">
+                <ReactMarkdown>
+                  {articleState.content}
+                </ReactMarkdown>
+              </div>
+            </>
+          )}
 
           <div className="mt-20 pt-10 border-t border-[#eee] flex justify-between items-center bg-[#F8F7F2] p-8 rounded-[4px]">
             <div>

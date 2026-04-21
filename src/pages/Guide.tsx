@@ -1,9 +1,28 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { articles } from '../data/articles';
+import { useEffect, useState } from 'react';
+import { fetchArticles } from '../services/notionService';
+import { articles as fallbackArticles } from '../data/articles';
 
 export default function Guide() {
+  const [articles, setArticles] = useState<any[]>(fallbackArticles);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadNotionData() {
+      try {
+        const notionData = await fetchArticles();
+        if (notionData && notionData.length > 0) {
+          setArticles(notionData);
+        }
+      } catch(e) {
+        console.error(e);
+      }
+      setIsLoading(false);
+    }
+    loadNotionData();
+  }, []);
   return (
     <>
       <Helmet>
@@ -24,7 +43,9 @@ export default function Guide() {
           </div>
 
           <div className="space-y-8">
-            {articles.map((article, index) => (
+            {isLoading ? (
+              <div className="text-center py-12 text-[#999]">Loading guide articles...</div>
+            ) : articles.map((article, index) => (
               <motion.div 
                 key={index}
                 initial={{ opacity: 0, y: 15 }}
@@ -47,7 +68,7 @@ export default function Guide() {
                   </p>
                 </div>
                 <div className="md:text-right shrink-0">
-                  <Link to={`/enshi-travel-guide/${article.slug}`} className="inline-block border border-theme-primary text-theme-primary px-6 py-2 uppercase text-[11px] font-bold tracking-[1px] rounded-[4px] hover:bg-theme-primary hover:text-white transition-colors">
+                  <Link to={`/enshi-travel-guide/${article.slug}${article.id ? `?id=${article.id}` : ''}`} className="inline-block border border-theme-primary text-theme-primary px-6 py-2 uppercase text-[11px] font-bold tracking-[1px] rounded-[4px] hover:bg-theme-primary hover:text-white transition-colors">
                     Read Article
                   </Link>
                 </div>

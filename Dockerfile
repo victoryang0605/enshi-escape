@@ -16,6 +16,7 @@ RUN npm run build
 
 # Expose dynamic port
 ENV PORT=3000
+ENV NODE_ENV=production
 EXPOSE 3000
 
 # Start Express server via tsx

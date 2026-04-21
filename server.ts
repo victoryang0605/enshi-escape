@@ -100,6 +100,59 @@ async function startServer() {
     }
   });
 
+  app.get("/sitemap.xml", async (req, res) => {
+    res.header('Content-Type', 'application/xml');
+    
+    const baseUrl = 'https://www.enshiescape.com';
+    let dynamicUrls = '';
+
+    // Generate URLs from Notion articles if available in cache
+    if (cache.articlesList.data) {
+      dynamicUrls = cache.articlesList.data.map((article: any) => `
+  <url>
+    <loc>${baseUrl}/enshi-travel-guide/${article.slug}?id=${article.id}</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>`).join('');
+    }
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${baseUrl}/</loc>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>${baseUrl}/about</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>${baseUrl}/contact</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>${baseUrl}/enshi-tours</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>${baseUrl}/enshi-travel-guide</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>${baseUrl}/faq</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>${dynamicUrls}
+</urlset>`;
+
+    res.send(xml);
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

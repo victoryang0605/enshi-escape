@@ -7,7 +7,7 @@ import "dotenv/config";
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
   // Initialize Notion components on the server where it's safe
   let notion: Client | null = null;

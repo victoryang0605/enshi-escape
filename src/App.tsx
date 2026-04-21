@@ -6,6 +6,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Tours from './pages/Tours';
 import Guide from './pages/Guide';
+import Article from './pages/Article';
 import FAQ from './pages/FAQ';
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="enshi-tours" element={<Tours />} />
             <Route path="enshi-travel-guide" element={<Guide />} />
+            <Route path="enshi-travel-guide/:slug" element={<Article />} />
             <Route path="faq" element={<FAQ />} />
           </Route>
         </Routes>

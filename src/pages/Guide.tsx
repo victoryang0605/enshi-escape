@@ -1,41 +1,9 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { articles } from '../data/articles';
 
 export default function Guide() {
-  const articles = [
-    {
-      title: "Best Time to Visit Enshi",
-      excerpt: "Weather patterns in the mountainous Hubei region and when to photograph the perfect sea of clouds.",
-      category: "Planning",
-      date: "Oct 12, 2025"
-    },
-    {
-      title: "Top 5 Hiking Trails in the Grand Canyon",
-      excerpt: "From beginner-friendly boardwalks to steep vertical ascents, your complete guide to trekking Enshi.",
-      category: "Adventure",
-      date: "Nov 03, 2025"
-    },
-    {
-      title: "Tujia Minority Cuisine: What to Eat",
-      excerpt: "Discover the spicy, sour, and utterly unique flavors of the indigenous tribes, including the famous 'Hezha'.",
-      category: "Culture",
-      date: "Dec 15, 2025"
-    },
-    {
-      title: "Where to Stay: Boutique Hotels vs. Villages",
-      excerpt: "Comparing luxury downtown options with authentic cliffside homestays for international standards.",
-      category: "Accommodation",
-      date: "Jan 22, 2026"
-    },
-    {
-      title: "How to Get to Pingshan Canyon",
-      excerpt: "Navigating the remote transport routes to reach China's 'floating boat' paradise safely and efficiently.",
-      category: "Transport",
-      date: "Mar 05, 2026"
-    }
-  ];
-
   return (
     <>
       <Helmet>
@@ -79,7 +47,7 @@ export default function Guide() {
                   </p>
                 </div>
                 <div className="md:text-right shrink-0">
-                  <Link to="#" className="inline-block border border-theme-primary text-theme-primary px-6 py-2 uppercase text-[11px] font-bold tracking-[1px] rounded-[4px] hover:bg-theme-primary hover:text-white transition-colors">
+                  <Link to={`/enshi-travel-guide/${article.slug}`} className="inline-block border border-theme-primary text-theme-primary px-6 py-2 uppercase text-[11px] font-bold tracking-[1px] rounded-[4px] hover:bg-theme-primary hover:text-white transition-colors">
                     Read Article
                   </Link>
                 </div>

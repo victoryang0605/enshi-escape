@@ -116,6 +116,39 @@ export default function Guestbook() {
       <Helmet>
         <title>Traveler Stories & Reviews | Enshi Escapes</title>
         <meta name="description" content="Read reviews and stories from international travelers who have explored the Enshi Grand Canyon and Pingshan with Enshi Escapes." />
+        {reviews.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "name": "Enshi Escapes Private Tours",
+              "description": "Premium guided tours and logistics for the Enshi Grand Canyon and western Hubei regions.",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": (reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length).toFixed(1),
+                "reviewCount": reviews.length,
+                "bestRating": "5",
+                "worstRating": "1"
+              },
+              "review": reviews.slice(0, 5).map(r => ({
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": r.name
+                },
+                "datePublished": new Date(r.date).toISOString().split('T')[0],
+                "reviewBody": r.content,
+                "name": r.title,
+                "reviewRating": {
+                  "@type": "Rating",
+                  "bestRating": "5",
+                  "ratingValue": r.rating,
+                  "worstRating": "1"
+                }
+              }))
+            })}
+          </script>
+        )}
       </Helmet>
 
       {/* Header */}
@@ -345,7 +378,7 @@ export default function Guestbook() {
                         <img 
                           key={i} 
                           src={photo} 
-                          alt={`Review photo ${i + 1}`}
+                          alt={review.photoAlt || `Review photo by ${review.name} - Enshi Escapes`}
                           className={`w-full object-cover rounded-xl border border-[#eee] ${
                             (i === 0 && review.photos.length === 3) || review.photos.length === 1 
                               ? 'col-span-2 aspect-video' 

@@ -2,6 +2,7 @@ import { useParams, Navigate, Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useState, useEffect } from 'react';
 import { articles as localFallbackArticles } from '../data/articles';
 import { fetchArticleContent, fetchArticles } from '../services/notionService';
@@ -105,8 +106,8 @@ export default function Article() {
                 )}
               </header>
 
-              <div className="markdown-body prose prose-lg prose-headings:font-serif prose-headings:text-theme-primary prose-a:text-theme-accent prose-p:text-[#444] leading-[1.8]">
-                <ReactMarkdown>
+              <div className="markdown-body prose prose-lg prose-headings:font-serif prose-headings:text-theme-primary prose-a:text-theme-accent prose-p:text-[#444] leading-[1.8] overflow-x-auto">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {articleState.content}
                 </ReactMarkdown>
               </div>

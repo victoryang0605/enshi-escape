@@ -60,6 +60,7 @@ async function startServer() {
         excerpt: page.properties.Excerpt?.rich_text?.[0]?.plain_text || '',
         category: page.properties.Category?.select?.name || 'Uncategorized',
         date: page.properties.Date?.date?.start || 'Unknown Date',
+        alt: page.properties.ALT?.rich_text?.[0]?.plain_text || page.properties.Name?.title?.[0]?.plain_text || 'Enshi travel guide image',
       }));
 
       // Update Cache
@@ -185,7 +186,8 @@ async function startServer() {
           content: page.properties.Review?.rich_text?.[0]?.plain_text || '',
           rating: page.properties.Rating?.number || 5,
           date: new Date(page.created_time).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
-          photos: photos
+          photos: photos,
+          photoAlt: page.properties.ALT?.rich_text?.[0]?.plain_text || page.properties.Title?.rich_text?.[0]?.plain_text || 'Enshi travel review photo'
         };
       });
       

@@ -51,8 +51,20 @@ export default function Article() {
   return (
     <>
       <Helmet>
-        <title>{articleState?.title ? `${articleState.title} | Enshi Travel Guide` : 'Enshi Travel Guide'}</title>
+        <title>{articleState?.title ? `${articleState.title} | Enshi Escapes` : 'Enshi Travel Guide | Enshi Escapes'}</title>
         {articleState?.excerpt && <meta name="description" content={articleState.excerpt} />}
+        <link rel="canonical" href={`https://www.enshiescape.com/enshi-travel-guide/${slug}${pageId ? `?id=${pageId}` : ''}`} />
+        
+        {/* OpenGraph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={articleState?.title || 'Enshi Travel Guide'} />
+        {articleState?.excerpt && <meta property="og:description" content={articleState.excerpt} />}
+        <meta property="og:url" content={`https://www.enshiescape.com/enshi-travel-guide/${slug}${pageId ? `?id=${pageId}` : ''}`} />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={articleState?.title || 'Enshi Travel Guide'} />
+        {articleState?.excerpt && <meta name="twitter:description" content={articleState.excerpt} />}
       </Helmet>
 
       <article className="pt-20 pb-24 bg-theme-bg min-h-screen">

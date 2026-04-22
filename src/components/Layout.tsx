@@ -22,11 +22,10 @@ export default function Layout() {
             </Link>
             
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               <Link to="/enshi-tours" className="uppercase text-[14px] font-medium tracking-[1px] text-theme-ink hover:text-theme-primary transition-colors">Tours</Link>
               <Link to="/enshi-travel-guide" className="uppercase text-[14px] font-medium tracking-[1px] text-theme-ink hover:text-theme-primary transition-colors">Travel Guide</Link>
-              <Link to="/about" className="uppercase text-[14px] font-medium tracking-[1px] text-theme-ink hover:text-theme-primary transition-colors">About</Link>
-              <Link to="/faq" className="uppercase text-[14px] font-medium tracking-[1px] text-theme-ink hover:text-theme-primary transition-colors">FAQ</Link>
+              <Link to="/guestbook" className="uppercase text-[14px] font-medium tracking-[1px] text-theme-ink hover:text-theme-primary transition-colors">Reviews</Link>
               <Link to="/contact" className="bg-theme-primary text-white px-6 py-2.5 rounded-[4px] font-semibold transition-all hover:shadow-[0_4px_12px_rgba(74,93,78,0.3)] shadow-[0_4px_12px_rgba(74,93,78,0.15)] uppercase text-[12px] tracking-[1px]">
                 Plan Your Trip
               </Link>
@@ -51,8 +50,7 @@ export default function Layout() {
             <div className="px-4 py-4 space-y-4 flex flex-col">
               <Link to="/enshi-tours" onClick={handleNavClick} className="uppercase text-[13px] tracking-[1px] text-theme-ink hover:text-theme-primary font-medium py-2">Tours</Link>
               <Link to="/enshi-travel-guide" onClick={handleNavClick} className="uppercase text-[13px] tracking-[1px] text-theme-ink hover:text-theme-primary font-medium py-2">Travel Guide</Link>
-              <Link to="/about" onClick={handleNavClick} className="uppercase text-[13px] tracking-[1px] text-theme-ink hover:text-theme-primary font-medium py-2">About</Link>
-              <Link to="/faq" onClick={handleNavClick} className="uppercase text-[13px] tracking-[1px] text-theme-ink hover:text-theme-primary font-medium py-2">FAQ</Link>
+              <Link to="/guestbook" onClick={handleNavClick} className="uppercase text-[13px] tracking-[1px] text-theme-ink hover:text-theme-primary font-medium py-2">Reviews</Link>
               <Link to="/contact" onClick={handleNavClick} className="bg-theme-primary text-white px-4 py-3 rounded-[4px] font-semibold text-center uppercase text-[12px] tracking-[1px]">
                 Plan Your Trip
               </Link>

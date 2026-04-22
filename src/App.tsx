@@ -9,6 +9,8 @@ import Guide from './pages/Guide';
 import Article from './pages/Article';
 import FAQ from './pages/FAQ';
 
+import Guestbook from './pages/Guestbook';
+
 export default function App() {
   return (
     <HelmetProvider>
@@ -22,6 +24,7 @@ export default function App() {
             <Route path="enshi-travel-guide" element={<Guide />} />
             <Route path="enshi-travel-guide/:slug" element={<Article />} />
             <Route path="faq" element={<FAQ />} />
+            <Route path="guestbook" element={<Guestbook />} />
           </Route>
         </Routes>
       </BrowserRouter>

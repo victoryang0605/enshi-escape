@@ -90,7 +90,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 lg:items-center">
                 <Link to="/contact" className="inline-flex justify-center items-center gap-2 bg-theme-primary text-white px-10 py-4 rounded-[4px] font-semibold hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(74,93,78,0.2)] hover:shadow-[0_4px_16px_rgba(74,93,78,0.3)]">
-                  Start Planning
+                   Start Planning
                 </Link>
                 <Link to="/enshi-tours" className="inline-flex justify-center items-center gap-2 text-theme-primary px-8 py-4 font-semibold hover:text-theme-accent transition-colors">
                   View Tours <ArrowRight className="w-5 h-5" />
@@ -116,6 +116,38 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Cinematic Video Section */}
+      <section className="relative h-[60vh] md:h-[80vh] overflow-hidden bg-black">
+        <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none" />
+        
+        {/* YouTube Background Video */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none">
+          <iframe 
+            className="w-screen h-[56.25vw] min-h-full min-w-[177.77vh] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            src="https://www.youtube.com/embed/kuYavmbwblk?autoplay=1&mute=1&loop=1&playlist=kuYavmbwblk&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3" 
+            title="Enshi Cinematic Background"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+
+        <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <h2 className="text-white font-serif text-4xl md:text-5xl lg:text-7xl mb-6 drop-shadow-lg leading-tight">
+              Mist, Mountains, <br className="hidden md:block" />and Eternal Peace.
+            </h2>
+            <p className="text-white/90 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto drop-shadow-md">
+              Witness the raw beauty of the Hubei highlands. No crowds, just the whisper of the wind and the echo of the gorge.
+            </p>
+          </motion.div>
         </div>
       </section>
 

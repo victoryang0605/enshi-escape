@@ -1,0 +1,120 @@
+import { Helmet } from "react-helmet-async";
+
+const SITE_URL = "https://www.enshiescape.com";
+
+/** Organization (TravelAgency) JSON-LD — rendered once in Layout. */
+export function OrgJsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "@id": `${SITE_URL}/#organization`,
+    name: "Enshi Escapes",
+    url: SITE_URL,
+    description:
+      "Enshi Escapes is a local travel agency crafting private, English-guided tours of Enshi, Hubei, China — Grand Canyon, Pingshan Canyon, Tujia culture and more.",
+    email: "victoryang0605@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Enshi City",
+      addressRegion: "Hubei Province",
+      addressCountry: "CN",
+    },
+    areaServed: "Enshi Tujia and Miao Autonomous Prefecture, Hubei, China",
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "victoryang0605@gmail.com",
+      contactType: "reservations",
+      availableLanguage: ["English", "Chinese"],
+    },
+    sameAs: [],
+  };
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(data)}</script>
+    </Helmet>
+  );
+}
+
+export interface Crumb {
+  name: string;
+  path: string;
+}
+
+/** BreadcrumbList JSON-LD for sub-pages. */
+export function BreadcrumbJsonLd({ items }: { items: Crumb[] }) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: `${SITE_URL}${item.path}`,
+    })),
+  };
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(data)}</script>
+    </Helmet>
+  );
+}
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+/** FAQPage JSON-LD. */
+export function FaqJsonLd({ faqs }: { faqs: FaqItem[] }) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(data)}</script>
+    </Helmet>
+  );
+}
+
+export interface Attraction {
+  name: string;
+  description: string;
+  image: string;
+}
+
+/** TouristAttraction JSON-LD (ItemList) for the homepage destinations. */
+export function TouristAttractionsJsonLd({ attractions }: { attractions: Attraction[] }) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Top attractions in Enshi",
+    itemListElement: attractions.map((a, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "TouristAttraction",
+        name: a.name,
+        description: a.description,
+        image: `${SITE_URL}${a.image}`,
+        touristType: "International travelers",
+        isAccessibleForFree: false,
+        address: {
+          "@type": "PostalAddress",
+          addressRegion: "Hubei Province",
+          addressCountry: "CN",
+        },
+      },
+    })),
+  };
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(data)}</script>
+    </Helmet>
+  );
+}

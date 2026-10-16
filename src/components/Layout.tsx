@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Menu, X, MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { OrgJsonLd } from './Seo';
 
 export default function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -13,6 +14,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen bg-theme-bg font-sans text-theme-ink selection:bg-theme-accent/20 selection:text-theme-ink flex flex-col">
+      <OrgJsonLd />
       {/* Navigation */}
       <nav className="fixed w-full z-50 bg-theme-bg/90 backdrop-blur-md border-b border-[#eee] transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

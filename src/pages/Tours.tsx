@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
+import { PRICING, formatTourPrice } from '../data/pricing';
+import { BreadcrumbJsonLd } from '../components/Seo';
 
 // A sub-component to handle the image carousel state for each individual card
 function TourCard({ tour, index }: { tour: any, index: number }) {
@@ -60,6 +62,10 @@ function TourCard({ tour, index }: { tour: any, index: number }) {
       <div className="p-8 flex flex-col flex-1">
         <div className="text-[11px] font-bold uppercase tracking-[1px] text-theme-accent mb-3">{tour.duration}</div>
         <h3 className="font-serif text-[24px] text-theme-primary mb-3">{tour.title}</h3>
+        <p className="text-theme-primary font-bold text-[16px] mb-3">
+          {formatTourPrice(PRICING.tours[tour.priceKey])}
+          <span className="block text-[12px] font-normal text-[#888] mt-1">{PRICING.tours[tour.priceKey].note}</span>
+        </p>
         <p className="text-[#666] text-[14px] leading-[1.6] mb-6 flex-1">
           {tour.description}
         </p>
@@ -81,6 +87,7 @@ export default function Tours() {
   // Enhanced to 6 tours with multiple images per tour
   const tours = [
     {
+      priceKey: "classic",
       title: "The Classic Route: Canyon & Waters",
       duration: "3 Days / 2 Nights",
       highlights: ["Enshi Grand Canyon", "Pingshan Canyon", "Tusi City"],
@@ -88,6 +95,7 @@ export default function Tours() {
       description: "Our most popular introductory tour for first-time visitors, hitting all the iconic natural and cultural landmarks in a smooth, unhurried pace."
     },
     {
+      priceKey: "deep",
       title: "Deep Exploration: Caves & Forests",
       duration: "4 Days / 3 Nights",
       highlights: ["Tenglong Cave", "Suobuya Stone Forest", "Tea Plantations"],
@@ -95,6 +103,7 @@ export default function Tours() {
       description: "Venture deeper into the geological wonders of Enshi, exploring colossal cave networks, ancient sea floors, and lush alpine tea fields."
     },
     {
+      priceKey: "cultural",
       title: "Cultural Immersion: Villages & Valleys",
       duration: "5 Days / 4 Nights",
       highlights: ["Xuan'en Night Views", "Tujia Villages", "Gongshui River"],
@@ -102,6 +111,7 @@ export default function Tours() {
       description: "A slower-paced journey focusing on local gastronomy, indigenous minority heritage, and experiencing the romantic riverside architecture at night."
     },
     {
+      priceKey: "photography",
       title: "Enshi Photography Expedition",
       duration: "5 Days / 4 Nights",
       highlights: ["Sunrise at Karst Peaks", "Clear Water Boats", "Golden Hour at Stones"],
@@ -109,6 +119,7 @@ export default function Tours() {
       description: "Designed for shutterbugs. We chase the best light, arriving at vantage points early, avoiding crowds, and hunting for Enshi's iconic sea of clouds."
     },
     {
+      priceKey: "hiking",
       title: "Hidden Trails & Remote Hiking",
       duration: "4 Days / 3 Nights",
       highlights: ["Vertical Cliff Trails", "Uncharted Gorges", "Local Farm Meals"],
@@ -116,6 +127,7 @@ export default function Tours() {
       description: "Leave the boardwalks behind. A physically engaging itinerary for hiking enthusiasts who want to trek along sheer cliffs and untouched paths."
     },
     {
+      priceKey: "grandLoop",
       title: "The Ultimate Enshi Grand Loop",
       duration: "7 Days / 6 Nights",
       highlights: ["Everything Enshi", "All Major Canyons", "In-depth Culture"],
@@ -127,16 +139,17 @@ export default function Tours() {
   return (
     <>
       <Helmet>
-        <title>Enshi Tours | Custom Nature, Culture & Retreat Experiences</title>
-        <meta name="description" content="Discover our expertly crafted Enshi tours. Explore our 3 to 7-day handcrafted itineraries featuring Grand Canyons, hidden waters, and Tujia culture." />
+        <title>Enshi Tours | Private Nature, Culture & Hiking Experiences (3–7 Days)</title>
+        <meta name="description" content="Handcrafted 3 to 7-day Enshi itineraries: Grand Canyon, hidden waters, Tujia culture. See starting prices and customize your private tour with English-speaking guides." />
       </Helmet>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Enshi Tours", path: "/enshi-tours" }]} />
 
       <section className="pt-20 pb-24 bg-theme-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="inline-block uppercase tracking-[2px] text-[11px] text-theme-accent font-bold mb-4">Curated Experiences</span>
             <h1 className="text-4xl lg:text-[56px] font-serif leading-[1.1] text-theme-primary mb-6">
-              Enshi Signature Tours
+              Enshi Tours: Private Nature, Culture &amp; Hiking Experiences
             </h1>
             <p className="text-[18px] text-[#666] max-w-2xl mx-auto leading-[1.6]">
               All our itineraries are fully customizable. Select a foundation below, and our English-speaking experts will tailor the pace, hotels, and dining to your exact preferences.

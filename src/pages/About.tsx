@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import { BreadcrumbJsonLd } from '../components/Seo';
 
 export default function About() {
   return (
@@ -8,6 +9,7 @@ export default function About() {
         <title>About Enshi Escape | Curated Nature & Culture Travel in Enshi</title>
         <meta name="description" content="Learn why we started Enshi Escape. Our mission is to bridge the gap for international travelers wanting to explore the untouched beauty of Enshi." />
       </Helmet>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "About Us", path: "/about" }]} />
 
       <section className="py-20 bg-theme-bg flex-1">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +20,7 @@ export default function About() {
           >
             <span className="inline-block uppercase tracking-[2px] text-[11px] text-theme-accent font-bold mb-4">Our Story</span>
             <h1 className="text-4xl lg:text-[56px] font-serif leading-[1.1] text-theme-primary mb-8">
-              Why Enshi Escapes?
+              Why Travel Enshi with Enshi Escapes?
             </h1>
             
             <div className="prose prose-lg text-[#555] font-serif leading-[1.8]">

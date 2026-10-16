@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import { PRICING, formatFromPrice } from '../data/pricing';
+import { PRICING, formatTourPrice } from '../data/pricing';
 import { BreadcrumbJsonLd } from '../components/Seo';
 
 // A sub-component to handle the image carousel state for each individual card
@@ -63,7 +63,7 @@ function TourCard({ tour, index }: { tour: any, index: number }) {
         <div className="text-[11px] font-bold uppercase tracking-[1px] text-theme-accent mb-3">{tour.duration}</div>
         <h3 className="font-serif text-[24px] text-theme-primary mb-3">{tour.title}</h3>
         <p className="text-theme-primary font-bold text-[16px] mb-3">
-          {formatFromPrice(PRICING.tours[tour.priceKey])}
+          {formatTourPrice(PRICING.tours[tour.priceKey])}
           <span className="block text-[12px] font-normal text-[#888] mt-1">{PRICING.tours[tour.priceKey].note}</span>
         </p>
         <p className="text-[#666] text-[14px] leading-[1.6] mb-6 flex-1">

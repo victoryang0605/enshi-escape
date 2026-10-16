@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { PRICING } from '../data/pricing';
+import { PRICING, formatCarPrice, formatGuidePrice } from '../data/pricing';
 import { BreadcrumbJsonLd, FaqJsonLd } from '../components/Seo';
 
 export default function FAQ() {
@@ -28,7 +28,7 @@ export default function FAQ() {
     },
     {
       q: "How much does a trip to Enshi cost?",
-      a: `Our private tours start from $${PRICING.tours.classic.fromPerPerson} per person for the 3-day Classic Route, with longer itineraries priced accordingly. The final quote depends on season, group size and hotel class — every itinerary is customized, so contact us for an exact price. No payment is required until your itinerary is confirmed.`
+      a: `Our private tours are ${PRICING.tours.classic.range} per person, depending on season, group size and hotel class. The final quote is customized to your itinerary — every quote lists inclusions line by line, with no hidden costs. No payment is required until your itinerary is confirmed.`
     },
     {
       q: "What is included in the tour price?",
@@ -75,8 +75,16 @@ export default function FAQ() {
       a: "2–4 weeks ahead is ideal, especially for April–June and September–November. Last-minute requests are welcome too — if guides and hotels are available, we can often arrange a trip within a few days."
     },
     {
+      q: "How much does a private car with driver cost?",
+      a: `Private charters are ${formatCarPrice()} (${PRICING.privateCar.vehicles}, ${PRICING.privateCar.seats}). Our local drivers know every mountain curve in Enshi, so you travel safely and comfortably.`
+    },
+    {
+      q: "How much is an English-speaking guide?",
+      a: `English-speaking guides are ${formatGuidePrice()}. ${PRICING.guide.note} — handy for chatting with locals in remote villages.`
+    },
+    {
       q: "Do you offer airport pickup?",
-      a: `Yes. We monitor your flight or train and greet you with English signage right at the arrivals hall — at Enshi Xujiaping Airport (ENH) or Enshi Railway Station. Standalone transfers start from $${PRICING.transferPerRide} per ride.`
+      a: "Yes. We monitor your flight or train and greet you with English signage right at the arrivals hall — at Enshi Xujiaping Airport (ENH) or Enshi Railway Station. Airport transfers can also be booked as a standalone service; contact us for a quote based on your group size."
     }
   ];
 

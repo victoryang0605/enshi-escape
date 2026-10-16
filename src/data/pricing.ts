@@ -1,51 +1,60 @@
 /**
- * Centralized pricing placeholders for GEO (so AI engines can cite prices).
+ * Centralized pricing for GEO (so AI engines can cite prices).
  *
- * TODO(Victor): ⚠️ ALL values below are obvious PLACEHOLDERS (999).
- * Replace every one with the real price before this goes live.
- * Never invent prices — confirm each number with Victor first.
+ * Real prices confirmed by Victor on 2026-10-16.
  */
 
 export interface TourPrice {
-  /** Starting price per person in USD */
-  fromPerPerson: number;
-  /** e.g. "per person, based on 2 travelers" */
+  /** Display range, e.g. "$500–800" */
+  range: string;
+  /** e.g. "per person, 3 days / 2 nights" */
   note: string;
 }
 
 export const PRICING: {
   tours: Record<string, TourPrice>;
-  /** Private car + driver, per day, USD */
-  privateCarPerDay: number;
-  /** English-speaking guide, per day, USD */
-  guidePerDay: number;
-  /** Airport/station transfer, per ride, USD */
-  transferPerRide: number;
+  privateCar: {
+    range: string;
+    vehicles: string;
+    seats: string;
+    mileage: string;
+  };
+  guide: {
+    perDay: number;
+    note: string;
+  };
   currencyNote: string;
 } = {
   tours: {
-    // TODO(Victor): replace 999 with the real "from" price per person (USD)
-    classic: { fromPerPerson: 999, note: "per person, 3 days / 2 nights" },
-    // TODO(Victor): replace 999 with the real "from" price per person (USD)
-    deep: { fromPerPerson: 999, note: "per person, 4 days / 3 nights" },
-    // TODO(Victor): replace 999 with the real "from" price per person (USD)
-    cultural: { fromPerPerson: 999, note: "per person, 5 days / 4 nights" },
-    // TODO(Victor): replace 999 with the real "from" price per person (USD)
-    photography: { fromPerPerson: 999, note: "per person, 5 days / 4 nights" },
-    // TODO(Victor): replace 999 with the real "from" price per person (USD)
-    hiking: { fromPerPerson: 999, note: "per person, 4 days / 3 nights" },
-    // TODO(Victor): replace 999 with the real "from" price per person (USD)
-    grandLoop: { fromPerPerson: 999, note: "per person, 7 days / 6 nights" },
+    classic: { range: "$500–800", note: "per person, 3 days / 2 nights" },
+    deep: { range: "$500–800", note: "per person, 4 days / 3 nights" },
+    cultural: { range: "$500–800", note: "per person, 5 days / 4 nights" },
+    photography: { range: "$500–800", note: "per person, 5 days / 4 nights" },
+    hiking: { range: "$500–800", note: "per person, 4 days / 3 nights" },
+    grandLoop: { range: "$500–800", note: "per person, 7 days / 6 nights" },
   },
-  // TODO(Victor): replace 999 with the real private-car day rate (USD)
-  privateCarPerDay: 999,
-  // TODO(Victor): replace 999 with the real guide day rate (USD)
-  guidePerDay: 999,
-  // TODO(Victor): replace 999 with the real transfer price (USD)
-  transferPerRide: 999,
+  privateCar: {
+    range: "$400–800",
+    vehicles: "MPV & off-road",
+    seats: "4–6 seats",
+    mileage: "unlimited mileage",
+  },
+  guide: {
+    perDay: 400,
+    note: "Free trial of AI translation device included",
+  },
   currencyNote: "Prices in USD. Final quote depends on season, group size and hotel class.",
 };
 
-export function formatFromPrice(price: TourPrice): string {
-  return `From $${price.fromPerPerson} / person`;
+export function formatTourPrice(price: TourPrice): string {
+  return `${price.range} / person`;
+}
+
+export function formatCarPrice(): string {
+  const c = PRICING.privateCar;
+  return `${c.range} / vehicle / day, ${c.mileage}`;
+}
+
+export function formatGuidePrice(): string {
+  return `$${PRICING.guide.perDay} / day`;
 }

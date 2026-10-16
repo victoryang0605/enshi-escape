@@ -33,7 +33,7 @@ export const TEAM: TeamMember[] = [
   {
     name: "Tan Guiying",
     role: "Partner Guide · Enshi Grand Canyon",
-    photo: "",
+    photo: "/team/tanguiying.png",
     bio: "Born in the Grand Canyon in 1982, Tan earned her national guide license in 2011 and is now a gold-medal guide leading an 11-woman Tujia guide team. She was named a National Model Worker in China's tourism system and has appeared on CCTV News.",
     languages: ["Chinese (Mandarin)"],
     specialties: ["Seven Star Village", "Yunlong Fissure", "Cliff walkways"],

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import { PRICING, formatTourPrice } from '../data/pricing';
+import { PRICING, formatTourPrice, formatCarPrice, formatGuidePrice } from '../data/pricing';
 import { BreadcrumbJsonLd } from '../components/Seo';
 
 // A sub-component to handle the image carousel state for each individual card
@@ -161,6 +161,30 @@ export default function Tours() {
             {tours.map((tour, index) => (
               <TourCard key={index} tour={tour} index={index} />
             ))}
+          </div>
+
+          {/* À la carte services pricing */}
+          <div className="mt-20 max-w-4xl mx-auto">
+            <h2 className="font-serif text-[28px] text-theme-primary text-center mb-8">
+              À La Carte Services
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="p-8 border-l-[1px] border-theme-accent bg-[#fff]">
+                <h3 className="font-serif text-[20px] text-theme-primary mb-2">Private Car Charter</h3>
+                <p className="text-[14px] text-[#777] leading-[1.6] mb-3">
+                  {PRICING.privateCar.vehicles}, {PRICING.privateCar.seats}, {PRICING.privateCar.mileage}. {PRICING.privateCar.airportPickup}.
+                </p>
+                <p className="text-[18px] font-semibold text-theme-accent">{formatCarPrice()}</p>
+              </div>
+              <div className="p-8 border-l-[1px] border-theme-accent bg-[#fff]">
+                <h3 className="font-serif text-[20px] text-theme-primary mb-2">English-Speaking Guide</h3>
+                <p className="text-[14px] text-[#777] leading-[1.6] mb-3">
+                  Fluent local guides with deep Tujia culture insights. {PRICING.guide.note}.
+                </p>
+                <p className="text-[18px] font-semibold text-theme-accent">{formatGuidePrice()}</p>
+              </div>
+            </div>
+            <p className="text-center text-[13px] text-[#999] mt-6">{PRICING.currencyNote}</p>
           </div>
         </div>
       </section>

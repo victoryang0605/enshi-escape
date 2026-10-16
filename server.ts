@@ -334,6 +334,7 @@ async function startServer() {
       `Route: ${field("route")}`,
       `Guide language: ${field("language")}`,
       `Tour theme: ${field("tourTheme")}`,
+      `Budget range: ${field("budget")}`,
     ].join("\n");
 
     try {

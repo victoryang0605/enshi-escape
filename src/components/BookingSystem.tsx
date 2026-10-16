@@ -68,7 +68,7 @@ export default function BookingSystem() {
           <CheckCircle2 className="w-16 h-16 text-theme-primary mx-auto mb-6" />
           <h2 className="font-serif text-[32px] text-theme-primary mb-4">Reservation Request Received</h2>
           <p className="text-[16px] text-[#666] leading-[1.6] mb-8">
-            Thank you for choosing Enshi Escapes. An automated confirmation has been sent to your email. Our bilingual team will review your request and follow up shortly.
+            Thank you for choosing Enshi Escapes. An automated confirmation has been sent to your email. Our bilingual team will review your request and reply <strong>within 12 hours</strong>.
           </p>
           <button 
             onClick={() => setIsSubmitted(false)}
@@ -127,6 +127,16 @@ export default function BookingSystem() {
                 <label className="block uppercase tracking-[1px] text-[11px] font-bold text-theme-ink mb-2">Email Address</label>
                 <input required name="email" type="email" className="w-full px-4 py-3 rounded-[4px] border border-[#ddd] focus:border-theme-primary outline-none transition-colors text-theme-ink bg-white" placeholder="you@example.com" />
               </div>
+            </div>
+            <div>
+              <label className="block uppercase tracking-[1px] text-[11px] font-bold text-theme-ink mb-2">Budget Range <span className="normal-case font-normal text-[#999]">(helps us tailor the quote)</span></label>
+              <select name="budget" className="w-full px-4 py-3 rounded-[4px] border border-[#ddd] focus:border-theme-primary outline-none transition-colors text-theme-ink bg-white">
+                <option value="Not sure yet">Not sure yet — advise me</option>
+                <option value="Under $800">Under $800</option>
+                <option value="$800 – $1,500">$800 – $1,500</option>
+                <option value="$1,500 – $3,000">$1,500 – $3,000</option>
+                <option value="Above $3,000">Above $3,000</option>
+              </select>
             </div>
 
             <motion.div 

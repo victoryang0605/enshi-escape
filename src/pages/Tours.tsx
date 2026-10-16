@@ -230,6 +230,9 @@ export default function Tours() {
             <p className="text-[18px] text-[#666] max-w-2xl mx-auto leading-[1.6]">
               All our itineraries are fully customizable. Select a foundation below, and our English-speaking experts will tailor the pace, hotels, and dining to your exact preferences.
             </p>
+            <p className="mt-4 text-[14px] text-[#888] font-serif italic">
+              No payment until your itinerary is confirmed · Private tours $500–800/person
+            </p>
           </div>
 
           {/* Grid Layout upgraded to support more cards cleanly */}

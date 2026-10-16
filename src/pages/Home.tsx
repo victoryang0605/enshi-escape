@@ -7,6 +7,7 @@ import ItineraryPlanner from '../components/ItineraryPlanner';
 import Testimonials from '../components/Testimonials';
 import { BreadcrumbJsonLd, TouristAttractionsJsonLd } from '../components/Seo';
 import { PRICING, formatCarPrice, formatGuidePrice, formatTourPrice } from '../data/pricing';
+import { TEAM } from '../data/team';
 
 export default function Home() {
   const services = [
@@ -99,12 +100,15 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 lg:items-center">
                 <Link to="/contact" className="inline-flex justify-center items-center gap-2 bg-theme-primary text-white px-10 py-4 rounded-[4px] font-semibold hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(74,93,78,0.2)] hover:shadow-[0_4px_16px_rgba(74,93,78,0.3)]">
-                   Start Planning
+                   Get a Free Itinerary Quote
                 </Link>
                 <Link to="/enshi-tours" className="inline-flex justify-center items-center gap-2 text-theme-primary px-8 py-4 font-semibold hover:text-theme-accent transition-colors">
                   View Tours <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
+              <p className="mt-5 text-[13px] text-[#888] font-serif italic">
+                No payment until your itinerary is confirmed · Private tours from $500/person
+              </p>
             </motion.div>
 
             <motion.div
@@ -124,6 +128,41 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust strip: guides up front (CRO) */}
+      <section className="py-14 bg-white border-y border-[#eee]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="flex -space-x-4">
+              {TEAM.filter((m) => m.photo).slice(0, 4).map((m) => (
+                <img
+                  key={m.name}
+                  src={m.photo}
+                  alt={`${m.name}, ${m.role} at Enshi Escapes`}
+                  className="w-16 h-16 rounded-full object-cover object-top border-[3px] border-white shadow-md"
+                />
+              ))}
+            </div>
+            <div className="text-center md:text-left flex-1">
+              <p className="font-serif text-[20px] text-theme-primary leading-snug">
+                Guided by award-winning locals — including Hubei "Zhiyin Famous Guide" recipients.
+              </p>
+              <p className="text-[14px] text-[#777] mt-2">
+                No payment until your itinerary is confirmed · Private tours from $500/person ·{" "}
+                <Link to="/about" className="text-theme-accent font-semibold hover:underline">
+                  Meet the team
+                </Link>
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="inline-flex justify-center items-center gap-2 bg-theme-primary text-white px-8 py-3.5 rounded-[4px] font-semibold hover:opacity-90 transition-all whitespace-nowrap"
+            >
+              Get a Free Itinerary Quote
+            </Link>
           </div>
         </div>
       </section>

@@ -296,6 +296,84 @@ async function startServer() {
     }
   });
 
+  // ============================================================
+  // Inquiry email notifications via company SMTP.
+  // Env: SMTP_HOST, SMTP_PORT (default 465), SMTP_USER, SMTP_PASS,
+  //      INQUIRY_NOTIFY_EMAIL (default zuhua.yang@slipstream.com.cn)
+  // ============================================================
+  const SMTP_HOST = process.env.SMTP_HOST;
+  const SMTP_PORT = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 465;
+  const SMTP_USER = process.env.SMTP_USER;
+  const SMTP_PASS = process.env.SMTP_PASS;
+  const NOTIFY_EMAIL = process.env.INQUIRY_NOTIFY_EMAIL || "zuhua.yang@slipstream.com.cn";
+  const smtpReady = () => !!(SMTP_HOST && SMTP_USER && SMTP_PASS);
+
+  app.post("/api/inquiry", async (req, res) => {
+    if (!smtpReady()) {
+      return res.status(500).json({
+        error: "SMTP_NOT_CONFIGURED",
+        details: "Set SMTP_HOST / SMTP_PORT / SMTP_USER / SMTP_PASS env vars to enable inquiry emails.",
+      });
+    }
+    const d: any = req.body || {};
+    const guestEmail = String(d.email || "").trim();
+    if (!guestEmail) return res.status(400).json({ error: "MISSING_EMAIL" });
+
+    const field = (k: string) => (d[k] ? String(d[k]) : "—");
+    const summary = [
+      `Service: ${field("serviceType")}`,
+      `Name: ${field("guestName")}`,
+      `Email: ${field("email")}`,
+      `Arrival date: ${field("arrivalDate")}`,
+      `Passengers: ${field("passengerCount")}`,
+      `Flight/Train No.: ${field("flightNumber")}`,
+      `Hotel: ${field("hotel")}`,
+      `Start date: ${field("startDate")}`,
+      `Duration: ${field("duration")}`,
+      `Vehicle: ${field("vehicleType")}`,
+      `Route: ${field("route")}`,
+      `Guide language: ${field("language")}`,
+      `Tour theme: ${field("tourTheme")}`,
+    ].join("\n");
+
+    try {
+      const { default: nodemailer } = await import("nodemailer");
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: SMTP_PORT === 465,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+      });
+
+      // 1) Notify the company
+      await transporter.sendMail({
+        from: `"Enshi Escapes Website" <${SMTP_USER}>`,
+        to: NOTIFY_EMAIL,
+        subject: `New inquiry [${field("serviceType")}] — ${field("guestName")} (${field("arrivalDate")})`,
+        text: `A new inquiry was submitted on enshiescape.com:\n\n${summary}\n`,
+      });
+
+      // 2) Confirmation to the guest
+      await transporter.sendMail({
+        from: `"Enshi Escapes" <${SMTP_USER}>`,
+        to: guestEmail,
+        subject: "We've received your Enshi inquiry",
+        text:
+          `Hi ${field("guestName")},\n\n` +
+          `Thanks for reaching out to Enshi Escapes! We've received your ${field("serviceType")} inquiry ` +
+          `and will reply within 12 hours with a tailored plan and quote.\n\n` +
+          `Your request summary:\n${summary}\n\n` +
+          `Need us sooner? Chat with us on WhatsApp: https://wa.me/qr/CHOCPAGHDAK4K1\n\n` +
+          `Warm regards,\nEnshi Escapes Team\nzuhua.yang@slipstream.com.cn`,
+      });
+
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("===== INQUIRY EMAIL FAILED =====", error.message);
+      res.status(500).json({ error: "EMAIL_FAILED", details: error.message });
+    }
+  });
+
   // Debug endpoint to list all available databases
   app.get("/api/debug-notion", async (req, res) => {
     if (!notion) return res.status(500).json({ error: "Notion not initialized" });

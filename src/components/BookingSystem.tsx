@@ -30,7 +30,24 @@ export default function BookingSystem() {
           },
           body: JSON.stringify(data),
         });
-      } else {
+      }
+
+      // Trigger inquiry emails via our backend (non-blocking for UX)
+      try {
+        const emailRes = await fetch("/api/inquiry", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!emailRes.ok) {
+          const err = await emailRes.json().catch(() => ({}));
+          console.warn("Inquiry email not sent:", err.error || emailRes.status);
+        }
+      } catch (emailErr) {
+        console.warn("Inquiry email request failed:", emailErr);
+      }
+
+      if (!GOOGLE_SCRIPT_URL) {
         // Mock delay to demonstrate UI if URL is not yet configured
         await new Promise(resolve => setTimeout(resolve, 1500));
         console.log("Mock Submission (Add GOOGLE_SCRIPT_URL to connect to sheets):", data);

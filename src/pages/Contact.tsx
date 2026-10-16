@@ -1,13 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import BookingSystem from '../components/BookingSystem';
+import { BreadcrumbJsonLd } from '../components/Seo';
 
 export default function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact Enshi Escape | Plan Your Enshi Journey</title>
-        <meta name="description" content="Get in touch with Enshi Escapes to plan your custom itinerary. Book transfers, private cars, or English-speaking guides." />
+        <title>Contact Enshi Escapes | Get a Free Custom Itinerary Quote</title>
+        <meta name="description" content="Get in touch with Enshi Escapes to plan your custom itinerary. Book transfers, private cars, or English-speaking guides — no payment until your itinerary is confirmed." />
       </Helmet>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }]} />
 
       {/* Booking Form Integration */}
       <div className="bg-theme-bg pt-12">

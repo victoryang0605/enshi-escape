@@ -69,7 +69,7 @@ export default function BookingSystem() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <span className="inline-block uppercase tracking-[2px] text-[11px] text-theme-accent font-bold mb-4">Secure Your Journey</span>
-          <h2 className="font-serif text-[36px] text-theme-primary mb-4">Book Essential Services</h2>
+          <h1 className="font-serif text-[36px] text-theme-primary mb-4">Plan Your Enshi Journey</h1>
           <p className="text-[16px] text-[#666] max-w-2xl mx-auto leading-[1.6]">
             Reserve dedicated transportation and expert cultural guides. All reservations include 24/7 English-speaking remote support during your time in Enshi.
           </p>

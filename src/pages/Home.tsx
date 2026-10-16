@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Etiquette from '../components/Etiquette';
 import ItineraryPlanner from '../components/ItineraryPlanner';
+import { BreadcrumbJsonLd, TouristAttractionsJsonLd } from '../components/Seo';
 
 export default function Home() {
   const services = [
@@ -65,9 +66,11 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Enshi Escape | A journey into China's hidden landscapes</title>
-        <meta name="description" content="Experience the breathtaking landscapes and rich Tujia culture of Enshi with zero stress. English-speaking guides and custom itineraries." />
+        <title>Enshi Escapes | Private Enshi Tours for International Travelers</title>
+        <meta name="description" content="Experience the breathtaking landscapes and rich Tujia culture of Enshi with zero stress. English-speaking guides, private transport, custom itineraries. Get a free quote today." />
       </Helmet>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }]} />
+      <TouristAttractionsJsonLd attractions={destinations} />
 
       {/* Hero Section */}
       <section className="pt-8 pb-20 lg:pt-16 lg:pb-24 bg-theme-bg">

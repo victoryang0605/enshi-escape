@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Star, MessageSquare, Loader2, CheckCircle, ImagePlus, X } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { BreadcrumbJsonLd } from '../components/Seo';
 
 export default function Guestbook() {
   const [showForm, setShowForm] = useState(false);
@@ -150,6 +151,7 @@ export default function Guestbook() {
           </script>
         )}
       </Helmet>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Reviews", path: "/guestbook" }]} />
 
       {/* Header */}
       <section className="bg-theme-secondary/20 py-20 px-4">
@@ -159,7 +161,7 @@ export default function Guestbook() {
             animate={{ opacity: 1, y: 0 }}
             className="font-serif text-[42px] md:text-[56px] text-theme-ink tracking-tight mb-6"
           >
-            Traveler Stories
+            Traveler Stories &amp; Reviews
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

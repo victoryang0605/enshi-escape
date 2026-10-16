@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
 import { useState, useEffect } from 'react';
 import { articles as localFallbackArticles } from '../data/articles';
 import { fetchArticleContent, fetchArticles } from '../services/notionService';
+import { BreadcrumbJsonLd } from '../components/Seo';
 
 export default function Article() {
   const { slug } = useParams();
@@ -67,6 +68,11 @@ export default function Article() {
         <meta name="twitter:title" content={articleState?.title || 'Enshi Travel Guide'} />
         {articleState?.excerpt && <meta name="twitter:description" content={articleState.excerpt} />}
       </Helmet>
+      <BreadcrumbJsonLd items={[
+        { name: "Home", path: "/" },
+        { name: "Travel Guide", path: "/enshi-travel-guide" },
+        { name: articleState?.title || "Article", path: `/enshi-travel-guide/${slug}` },
+      ]} />
 
       <article className="pt-20 pb-24 bg-theme-bg min-h-screen">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

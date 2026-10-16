@@ -1,6 +1,8 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { PRICING } from '../data/pricing';
+import { BreadcrumbJsonLd, FaqJsonLd } from '../components/Seo';
 
 export default function FAQ() {
   const faqs = [
@@ -23,34 +25,88 @@ export default function FAQ() {
     {
       q: "Are the hiking trails safe?",
       a: "Yes, the main scenic areas like the Grand Canyon have well-maintained boardwalks and stairs. However, they involve significant vertical climbing (sometimes thousands of steps). We will assess your fitness level and recommend appropriate routes or cable car alternatives."
+    },
+    {
+      q: "How much does a trip to Enshi cost?",
+      a: `Our private tours start from $${PRICING.tours.classic.fromPerPerson} per person for the 3-day Classic Route, with longer itineraries priced accordingly. The final quote depends on season, group size and hotel class — every itinerary is customized, so contact us for an exact price. No payment is required until your itinerary is confirmed.`
+    },
+    {
+      q: "What is included in the tour price?",
+      a: "Typically: private chartered vehicle with driver, English-speaking guide, scenic spot tickets, and hotel bookings arranged to your standard. International/domestic flights to Enshi, personal expenses and travel insurance are not included. Your final quote lists every inclusion line by line — no hidden costs."
+    },
+    {
+      q: "How do I book a tour?",
+      a: "Simply fill in the inquiry form on our Contact page with your dates, group size and interests. We reply within 12 hours with a tailored itinerary and quote. Once you confirm the plan, we handle all bookings — tickets, hotels and transport."
+    },
+    {
+      q: "What payment methods do you accept?",
+      a: "We accept international bank transfer, Alipay and WeChat Pay. A deposit secures your dates; the balance is due before the trip starts. No payment is required until your itinerary strategy is confirmed."
+    },
+    {
+      q: "What is your cancellation policy?",
+      a: "Life happens — we get it. Cancellations made 14+ days before departure receive a full refund of the deposit. Within 14 days, we refund everything except costs already paid to hotels and ticket offices, which we document for you transparently."
+    },
+    {
+      q: "Do I need a visa to visit Enshi?",
+      a: "Enshi follows China's national visa policy. Many nationalities can enter China visa-free for short stays — check the latest policy for your passport before booking. If you need an invitation letter for a visa application, we are happy to provide one for confirmed bookings."
+    },
+    {
+      q: "How does mobile payment work in China for foreigners?",
+      a: "Download Alipay before you arrive and bind your international Visa/Mastercard — this covers almost every shop, restaurant and taxi in Enshi. WeChat Pay works too. Your guide will also help you get set up on day one, and we recommend keeping some RMB cash for remote villages."
+    },
+    {
+      q: "How big are your tour groups?",
+      a: "We specialize in private tours — just you and your travel companions, never mixed with strangers. Whether you are a solo traveler, a couple or a family of six, the vehicle, guide and pace are arranged around you."
+    },
+    {
+      q: "Will our guide speak fluent English?",
+      a: "Yes. Every guide we assign is a local who speaks fluent English and knows Enshi's geology, Tujia culture and hidden spots inside out. Many of our travelers tell us the guide was the highlight of their trip."
+    },
+    {
+      q: "Can you accommodate dietary restrictions?",
+      a: "Absolutely — tell us in advance and we will plan around it. Vegetarian, halal-friendly and allergy-aware arrangements are all doable; Tujia cuisine is flexible, and Enshi city has restaurants covering most needs."
+    },
+    {
+      q: "Is Enshi suitable for kids or older travelers?",
+      a: "Yes, with the right pacing. We design gentler routes with cable cars and shorter walks for families and seniors, and more challenging hikes for the adventurous. Tell us everyone's age and fitness level and we will tailor accordingly."
+    },
+    {
+      q: "How far in advance should I book?",
+      a: "2–4 weeks ahead is ideal, especially for April–June and September–November. Last-minute requests are welcome too — if guides and hotels are available, we can often arrange a trip within a few days."
+    },
+    {
+      q: "Do you offer airport pickup?",
+      a: `Yes. We monitor your flight or train and greet you with English signage right at the arrivals hall — at Enshi Xujiaping Airport (ENH) or Enshi Railway Station. Standalone transfers start from $${PRICING.transferPerRide} per ride.`
     }
   ];
 
   return (
     <>
       <Helmet>
-        <title>Enshi Travel FAQ | Weather, Transport, Hotels & Travel Tips</title>
-        <meta name="description" content="Answers to common questions about traveling to Enshi, China, including language barriers, payment methods, best seasons, and transportation." />
+        <title>Enshi Travel FAQ | Prices, Booking, Visa & Travel Tips</title>
+        <meta name="description" content="Answers about traveling to Enshi, China: tour prices, how to book, payment, cancellation, visa, mobile payment and best seasons. Free consultation available." />
       </Helmet>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "FAQ", path: "/faq" }]} />
+      <FaqJsonLd faqs={faqs} />
 
       <section className="pt-20 pb-24 bg-theme-bg min-h-screen">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-[56px] font-serif leading-[1.1] text-theme-primary mb-6">
-              Frequently Asked Questions
+              Enshi Travel FAQ
             </h1>
             <p className="text-[18px] text-[#666] leading-[1.6]">
-              Everything you need to know before packing your bags for the mountains of Hubei.
+              Everything international visitors ask us — prices, booking, payments, visas and practical tips for the mountains of Hubei.
             </p>
           </div>
 
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.5) }}
                 className="bg-white border-l-4 border-theme-accent p-6 shadow-sm"
               >
                 <h3 className="font-serif text-[20px] text-theme-primary mb-3">{faq.q}</h3>
@@ -60,7 +116,7 @@ export default function FAQ() {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="mt-16 bg-[#F8F7F2] border border-[#e8e6dc] p-8 text-center rounded-[4px]">
             <h4 className="font-serif text-[22px] text-theme-primary mb-3">Still have questions?</h4>
             <p className="text-[#666] mb-6">We provide free remote consultations for international travelers.</p>

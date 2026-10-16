@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchArticles } from '../services/notionService';
 import { articles as fallbackArticles } from '../data/articles';
+import { BreadcrumbJsonLd } from '../components/Seo';
 
 export default function Guide() {
   const [articles, setArticles] = useState<any[]>(fallbackArticles);
@@ -29,6 +30,7 @@ export default function Guide() {
         <title>Enshi Travel Guide | Best Time, Things to Do, Where to Stay</title>
         <meta name="description" content="Read expert tips on traveling to Enshi, Hubei. Get insights on the best time to visit, top attractions, local food, and transportation." />
       </Helmet>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Travel Guide", path: "/enshi-travel-guide" }]} />
 
       <section className="pt-20 pb-24 bg-theme-bg min-h-screen">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

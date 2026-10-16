@@ -66,7 +66,15 @@ export default function About() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {TEAM.map((m) => (
                 <div key={m.name} className="bg-theme-bg border border-[#eee] rounded-[4px] overflow-hidden">
-                  <img src={m.photo} alt={`${m.name} — ${m.role} at Enshi Escapes`} className="w-full h-64 object-cover" />
+                  {m.photo ? (
+                    <img src={m.photo} alt={`${m.name} — ${m.role} at Enshi Escapes`} className="w-full h-64 object-cover" />
+                  ) : (
+                    <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-[#d9d2c4] to-[#bfb6a3]">
+                      <span className="font-serif text-[64px] font-bold text-white/80">
+                        {m.name.charAt(0)}
+                      </span>
+                    </div>
+                  )}
                   <div className="p-6">
                     <h3 className="font-serif text-[20px] text-theme-primary">{m.name}</h3>
                     <p className="text-[13px] uppercase tracking-[1px] text-theme-accent font-bold mt-1 mb-3">{m.role}</p>

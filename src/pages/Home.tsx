@@ -5,28 +5,33 @@ import { Helmet } from 'react-helmet-async';
 import Etiquette from '../components/Etiquette';
 import ItineraryPlanner from '../components/ItineraryPlanner';
 import { BreadcrumbJsonLd, TouristAttractionsJsonLd } from '../components/Seo';
+import { PRICING, formatCarPrice, formatGuidePrice, formatTourPrice } from '../data/pricing';
 
 export default function Home() {
   const services = [
     {
       icon: <Plane className="w-8 h-8 text-theme-primary" />,
       title: "Airport & Station Transfers",
-      description: "Seamless arrivals. We monitor your flight/train and greet you with English signage right at the arrivals hall."
+      description: "Seamless arrivals. We monitor your flight/train and greet you with English signage right at the arrivals hall.",
+      price: "Free with private car charter"
     },
     {
       icon: <Car className="w-8 h-8 text-theme-primary" />,
       title: "Private Chartered Vehicles",
-      description: "Travel comfortably through mountain roads in clean, modern vehicles with experienced professional drivers."
+      description: "Travel comfortably through mountain roads in clean, modern vehicles with experienced professional drivers.",
+      price: `${formatCarPrice()} (${PRICING.privateCar.vehicles}, ${PRICING.privateCar.seats})`
     },
     {
       icon: <Users className="w-8 h-8 text-theme-primary" />,
       title: "Bilingual Cultural Guides",
-      description: "Break the language barrier. Our fluent English-speaking locals offer deep insights into Tujia culture and history."
+      description: "Break the language barrier. Our fluent English-speaking locals offer deep insights into Tujia culture and history.",
+      price: `${formatGuidePrice()} · ${PRICING.guide.note}`
     },
     {
       icon: <Map className="w-8 h-8 text-theme-primary" />,
       title: "Custom Itineraries",
-      description: "From tickets to hotels, we pre-arrange everything based on your pace so you can just relax and enjoy."
+      description: "From tickets to hotels, we pre-arrange everything based on your pace so you can just relax and enjoy.",
+      price: `${formatTourPrice(PRICING.tours.classic)} starting`
     }
   ];
 
@@ -179,6 +184,7 @@ export default function Home() {
                 </div>
                 <h3 className="font-serif text-[20px] text-theme-primary mb-2">{service.title}</h3>
                 <p className="text-[14px] text-[#777] leading-[1.5]">{service.description}</p>
+                <p className="mt-3 text-[15px] font-semibold text-theme-accent">{service.price}</p>
               </motion.div>
             ))}
           </div>

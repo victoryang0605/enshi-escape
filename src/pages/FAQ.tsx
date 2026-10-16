@@ -76,7 +76,7 @@ export default function FAQ() {
     },
     {
       q: "How much does a private car with driver cost?",
-      a: `Private charters are ${formatCarPrice()} (${PRICING.privateCar.vehicles}, ${PRICING.privateCar.seats}). Our local drivers know every mountain curve in Enshi, so you travel safely and comfortably.`
+      a: `Private charters are ${formatCarPrice()} (${PRICING.privateCar.vehicles}, ${PRICING.privateCar.seats}). ${PRICING.privateCar.airportPickup}. Our local drivers know every mountain curve in Enshi, so you travel safely and comfortably.`
     },
     {
       q: "How much is an English-speaking guide?",
@@ -84,7 +84,7 @@ export default function FAQ() {
     },
     {
       q: "Do you offer airport pickup?",
-      a: "Yes. We monitor your flight or train and greet you with English signage right at the arrivals hall — at Enshi Xujiaping Airport (ENH) or Enshi Railway Station. Airport transfers can also be booked as a standalone service; contact us for a quote based on your group size."
+      a: "Yes — and it's free. We monitor your flight or train and greet you with English signage right at the arrivals hall, at Enshi Xujiaping Airport (ENH) or Enshi Railway Station. Airport pickup is included free of charge with any private car charter."
     }
   ];
 

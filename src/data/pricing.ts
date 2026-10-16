@@ -18,6 +18,7 @@ export const PRICING: {
     vehicles: string;
     seats: string;
     mileage: string;
+    airportPickup: string;
   };
   guide: {
     perDay: number;
@@ -38,6 +39,7 @@ export const PRICING: {
     vehicles: "MPV & off-road",
     seats: "4–6 seats",
     mileage: "unlimited mileage",
+    airportPickup: "Airport pickup included free of charge",
   },
   guide: {
     perDay: 400,

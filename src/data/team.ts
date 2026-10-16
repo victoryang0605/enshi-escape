@@ -49,7 +49,7 @@ export const TEAM: TeamMember[] = [
   {
     name: "Wang Dandan",
     role: "Partner Guide · Shennong Stream",
-    photo: "",
+    photo: "/team/wangdandan.jpg",
     bio: "Guiding for 23 years, Wang is beloved for her stories of the Three Gorges migration — the submerged riverside land was once her childhood village. She took silver at the 2025 Hubei provincial guide competition.",
     languages: ["Chinese (Mandarin)"],
     specialties: ["Shennong Stream", "Trackers' culture", "Migration narratives"],

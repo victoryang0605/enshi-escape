@@ -67,9 +67,9 @@ export default function About() {
               {TEAM.map((m) => (
                 <div key={m.name} className="bg-theme-bg border border-[#eee] rounded-[4px] overflow-hidden">
                   {m.photo ? (
-                    <img src={m.photo} alt={`${m.name} — ${m.role} at Enshi Escapes`} className="w-full h-64 object-cover" />
+                    <img src={m.photo} alt={`${m.name} — ${m.role} at Enshi Escapes`} className="w-full aspect-[3/4] object-cover object-top" />
                   ) : (
-                    <div className="w-full h-64 flex items-center justify-center bg-gradient-to-br from-[#d9d2c4] to-[#bfb6a3]">
+                    <div className="w-full aspect-[3/4] flex items-center justify-center bg-gradient-to-br from-[#d9d2c4] to-[#bfb6a3]">
                       <span className="font-serif text-[64px] font-bold text-white/80">
                         {m.name.charAt(0)}
                       </span>

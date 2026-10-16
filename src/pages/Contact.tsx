@@ -26,7 +26,7 @@ export default function Contact() {
           <div className="inline-block border border-[#eee] bg-white p-8 rounded-[4px] shadow-[8px_8px_0px_rgba(74,93,78,0.05)] text-left">
             <h3 className="uppercase tracking-[1px] text-[12px] font-bold text-theme-ink mb-4">Direct Contact</h3>
             <ul className="space-y-3 text-[#555] font-serif">
-              <li><strong>Email:</strong> <a href="mailto:victoryang0605@gmail.com" className="text-theme-primary hover:text-theme-accent transition-colors">victoryang0605@gmail.com</a></li>
+              <li><strong>Email:</strong> <a href="mailto:zuhua.yang@slipstream.com.cn" className="text-theme-primary hover:text-theme-accent transition-colors">zuhua.yang@slipstream.com.cn</a></li>
               <li><strong>Office:</strong> Enshi City, Hubei Province, China</li>
               <li><strong>Hours:</strong> Mon-Sun, 9:00 AM - 6:00 PM (Beijing Time)</li>
             </ul>

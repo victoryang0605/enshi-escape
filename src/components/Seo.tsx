@@ -12,7 +12,7 @@ export function OrgJsonLd() {
     url: SITE_URL,
     description:
       "Enshi Escapes is a local travel agency crafting private, English-guided tours of Enshi, Hubei, China — Grand Canyon, Pingshan Canyon, Tujia culture and more.",
-    email: "victoryang0605@gmail.com",
+    email: "zuhua.yang@slipstream.com.cn",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Enshi City",
@@ -22,7 +22,7 @@ export function OrgJsonLd() {
     areaServed: "Enshi Tujia and Miao Autonomous Prefecture, Hubei, China",
     contactPoint: {
       "@type": "ContactPoint",
-      email: "victoryang0605@gmail.com",
+      email: "zuhua.yang@slipstream.com.cn",
       contactType: "reservations",
       availableLanguage: ["English", "Chinese"],
     },

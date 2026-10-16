@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Menu, X, MapPin } from 'lucide-react';
+import { Menu, X, MapPin, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { OrgJsonLd } from './Seo';
@@ -109,6 +109,18 @@ export default function Layout() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp floating button */}
+      <a
+        href="https://wa.me/qr/CHOCPAGHDAK4K1"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with us on WhatsApp"
+        title="Chat with us on WhatsApp"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-[0_4px_16px_rgba(37,211,102,0.45)] hover:scale-105 active:scale-95 transition-transform"
+      >
+        <MessageCircle className="w-7 h-7 text-white" />
+      </a>
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import { Helmet } from 'react-helmet-async';
+import { MessageCircle } from 'lucide-react';
 import BookingSystem from '../components/BookingSystem';
 import { BreadcrumbJsonLd } from '../components/Seo';
+
+const WHATSAPP_URL = "https://wa.me/qr/CHOCPAGHDAK4K1";
 
 export default function Contact() {
   return (
@@ -30,6 +33,27 @@ export default function Contact() {
               <li><strong>Office:</strong> Enshi City, Hubei Province, China</li>
               <li><strong>Hours:</strong> Mon-Sun, 9:00 AM - 6:00 PM (Beijing Time)</li>
             </ul>
+            <div className="mt-8 flex flex-col sm:flex-row items-center gap-6">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold uppercase text-[12px] tracking-[1px] px-6 py-3 rounded-[4px] hover:brightness-95 transition-all"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Chat on WhatsApp
+              </a>
+              <div className="flex items-center gap-4">
+                <img
+                  src="/whatsapp-qr.png"
+                  alt="WhatsApp QR code — scan to chat with Enshi Escapes"
+                  className="w-28 h-28 rounded-[4px] border border-[#eee]"
+                />
+                <p className="text-[13px] text-[#777] leading-[1.6]">
+                  Scan to chat<br />on WhatsApp
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

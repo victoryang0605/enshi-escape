@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { BreadcrumbJsonLd } from '../components/Seo';
+import { TEAM } from '../data/team';
 
 export default function About() {
   return (
@@ -46,6 +47,41 @@ export default function About() {
           </motion.div>
         </div>
       </section>
+
+      {/* Meet the Team — renders only once Victor adds real team members to src/data/team.ts */}
+      {TEAM.length > 0 && (
+        <section className="py-20 bg-white border-t border-[#eee]">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <span className="inline-block uppercase tracking-[2px] text-[11px] text-theme-accent font-bold mb-4">
+                Our People
+              </span>
+              <h2 className="font-serif text-[36px] text-theme-primary">
+                Meet the Team
+              </h2>
+              <p className="text-[15px] text-[#777] mt-4 max-w-2xl mx-auto leading-[1.7]">
+                Local experts and bilingual guides who will be with you every step of the journey.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {TEAM.map((m) => (
+                <div key={m.name} className="bg-theme-bg border border-[#eee] rounded-[4px] overflow-hidden">
+                  <img src={m.photo} alt={`${m.name} — ${m.role} at Enshi Escapes`} className="w-full h-64 object-cover" />
+                  <div className="p-6">
+                    <h3 className="font-serif text-[20px] text-theme-primary">{m.name}</h3>
+                    <p className="text-[13px] uppercase tracking-[1px] text-theme-accent font-bold mt-1 mb-3">{m.role}</p>
+                    <p className="text-[14px] text-[#555] leading-[1.7] mb-4">{m.bio}</p>
+                    <p className="text-[12px] text-[#888]">Languages: {m.languages.join(" · ")}</p>
+                    {m.specialties.length > 0 && (
+                      <p className="text-[12px] text-[#888] mt-1">Specialties: {m.specialties.join(" · ")}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

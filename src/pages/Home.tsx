@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Etiquette from '../components/Etiquette';
 import ItineraryPlanner from '../components/ItineraryPlanner';
+import Testimonials from '../components/Testimonials';
 import { BreadcrumbJsonLd, TouristAttractionsJsonLd } from '../components/Seo';
 import { PRICING, formatCarPrice, formatGuidePrice, formatTourPrice } from '../data/pricing';
 
@@ -238,6 +239,7 @@ export default function Home() {
 
       <Etiquette />
       <ItineraryPlanner />
+      <Testimonials />
     </>
   );
 }

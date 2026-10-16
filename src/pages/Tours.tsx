@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { PRICING, formatTourPrice, formatCarPrice, formatGuidePrice } from '../data/pricing';
 import { BreadcrumbJsonLd } from '../components/Seo';
@@ -9,6 +9,7 @@ import { BreadcrumbJsonLd } from '../components/Seo';
 // A sub-component to handle the image carousel state for each individual card
 function TourCard({ tour, index }: { tour: any, index: number }) {
   const [currentImage, setCurrentImage] = useState(0);
+  const [showItinerary, setShowItinerary] = useState(false);
 
   const nextImage = () => setCurrentImage((prev) => (prev + 1) % tour.images.length);
   const prevImage = () => setCurrentImage((prev) => (prev - 1 + tour.images.length) % tour.images.length);
@@ -75,6 +76,32 @@ function TourCard({ tour, index }: { tour: any, index: number }) {
             {tour.highlights.map((h: string, i: number) => <li key={i}>{h}</li>)}
           </ul>
         </div>
+        {tour.itinerary && tour.itinerary.length > 0 && (
+          <div className="mb-8 border-t border-[#eee] pt-6">
+            <button
+              onClick={() => setShowItinerary(!showItinerary)}
+              aria-expanded={showItinerary}
+              className="flex items-center justify-between w-full text-left group"
+            >
+              <span className="text-[12px] font-bold text-theme-ink uppercase group-hover:text-theme-primary transition-colors">
+                Day-by-day itinerary
+              </span>
+              <ChevronDown className={`w-4 h-4 text-theme-primary transition-transform ${showItinerary ? 'rotate-180' : ''}`} />
+            </button>
+            {showItinerary && (
+              <ol className="mt-4 space-y-3">
+                {tour.itinerary.map((day: string, i: number) => (
+                  <li key={i} className="flex gap-3 text-[14px] text-[#555] leading-[1.6]">
+                    <span className="shrink-0 font-bold text-theme-accent text-[12px] uppercase tracking-[1px] pt-[3px]">
+                      Day {i + 1}
+                    </span>
+                    <span className="font-serif">{day}</span>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        )}
         <Link to="/contact" className="text-center bg-theme-primary text-white py-3 rounded-[4px] font-bold uppercase text-[12px] tracking-[1px] hover:bg-[#3a4a3e] transition-colors w-full">
           Customize This Tour
         </Link>
@@ -92,7 +119,12 @@ export default function Tours() {
       duration: "3 Days / 2 Nights",
       highlights: ["Enshi Grand Canyon", "Pingshan Canyon", "Tusi City"],
       images: ["/enshi-2.jpg", "/pinshan-1.jpg", "/tusi-1.jpg"],
-      description: "Our most popular introductory tour for first-time visitors, hitting all the iconic natural and cultural landmarks in a smooth, unhurried pace."
+      description: "Our most popular introductory tour for first-time visitors, hitting all the iconic natural and cultural landmarks in a smooth, unhurried pace.",
+      itinerary: [
+        "Arrive in Enshi — free airport or railway pickup. Settle into your hotel, then explore Tusi City in the afternoon: Tujia architecture, folk performances, and traditional crafts.",
+        "Full day at Enshi Grand Canyon. Walk the cliffside plank roads, marvel at the 'One Incense Pillar' karst tower, and ride the cable car above the sea of clouds.",
+        "Morning boat ride through Pingshan Canyon, where the crystal-clear water makes wooden boats look like they are floating on air. Afternoon transfer to the airport or railway station."
+      ]
     },
     {
       priceKey: "deep",
@@ -100,7 +132,13 @@ export default function Tours() {
       duration: "4 Days / 3 Nights",
       highlights: ["Tenglong Cave", "Suobuya Stone Forest", "Tea Plantations"],
       images: ["/tenglong-3.jpg", "/shilin-2.jpg", "/enshi-3.jpg"],
-      description: "Venture deeper into the geological wonders of Enshi, exploring colossal cave networks, ancient sea floors, and lush alpine tea fields."
+      description: "Venture deeper into the geological wonders of Enshi, exploring colossal cave networks, ancient sea floors, and lush alpine tea fields.",
+      itinerary: [
+        "Arrive in Enshi, free pickup, and an easy evening stroll through the old town to acclimatize.",
+        "Explore Tenglong Cave, one of the world's largest cave systems — the giant entrance hall, the underground river, and the evening light-and-music show.",
+        "Wander the 460-million-year-old Suobuya Stone Forest maze in the morning; visit alpine tea plantations in the afternoon and taste freshly picked Enshi Yulu green tea.",
+        "Leisurely morning — optional Tusi City visit or local market walk before your departure transfer."
+      ]
     },
     {
       priceKey: "cultural",
@@ -108,7 +146,14 @@ export default function Tours() {
       duration: "5 Days / 4 Nights",
       highlights: ["Xuan'en Night Views", "Tujia Villages", "Gongshui River"],
       images: ["/xuanen-4.jpg", "/enshi-4.jpg", "/pinshan-2.jpg"],
-      description: "A slower-paced journey focusing on local gastronomy, indigenous minority heritage, and experiencing the romantic riverside architecture at night."
+      description: "A slower-paced journey focusing on local gastronomy, indigenous minority heritage, and experiencing the romantic riverside architecture at night.",
+      itinerary: [
+        "Arrive in Enshi, free pickup, and a welcome dinner featuring Tujia specialties like he'zha and cured pork.",
+        "Visit a traditional Tujia village — watch the 'crying marriage' folk performance, try hand-weaving, and share a family-style lunch with local hosts.",
+        "Day trip along the Gongshui River valley: riverside villages, stilted wooden houses, and a riverside lunch.",
+        "Free morning at leisure. In the evening, head to Xuan'en for the famous illuminated riverfront — night market snacks and cultural shows along the Gongshui River.",
+        "Morning tea and souvenir shopping in Enshi city before your departure transfer."
+      ]
     },
     {
       priceKey: "photography",
@@ -116,7 +161,14 @@ export default function Tours() {
       duration: "5 Days / 4 Nights",
       highlights: ["Sunrise at Karst Peaks", "Clear Water Boats", "Golden Hour at Stones"],
       images: ["/enshi-1.jpg", "/pinshan-3.jpg", "/enshi-5.jpg"],
-      description: "Designed for shutterbugs. We chase the best light, arriving at vantage points early, avoiding crowds, and hunting for Enshi's iconic sea of clouds."
+      description: "Designed for shutterbugs. We chase the best light, arriving at vantage points early, avoiding crowds, and hunting for Enshi's iconic sea of clouds.",
+      itinerary: [
+        "Arrive in Enshi, free pickup, and a sunset scouting session at a canyon viewpoint with your guide.",
+        "Sunrise shoot over the karst peaks of Enshi Grand Canyon, midday rest, then afternoon cliff-trail compositions in soft light.",
+        "Early morning at Pingshan Canyon to capture the 'floating boats' on mirror-clear water before the crowds arrive.",
+        "Golden-hour session at Suobuya Stone Forest — long shadows through the ancient stone maze; optional night-sky shoot if weather allows.",
+        "Final sunrise shoot at a handpicked vantage point, then departure transfer."
+      ]
     },
     {
       priceKey: "hiking",
@@ -124,7 +176,13 @@ export default function Tours() {
       duration: "4 Days / 3 Nights",
       highlights: ["Vertical Cliff Trails", "Uncharted Gorges", "Local Farm Meals"],
       images: ["/enshi-6.jpg", "/enshi-7.jpg", "/pinshan-4.jpg"],
-      description: "Leave the boardwalks behind. A physically engaging itinerary for hiking enthusiasts who want to trek along sheer cliffs and untouched paths."
+      description: "Leave the boardwalks behind. A physically engaging itinerary for hiking enthusiasts who want to trek along sheer cliffs and untouched paths.",
+      itinerary: [
+        "Arrive in Enshi, free pickup, gear check with your guide, and an early night.",
+        "Trek the Grand Canyon's upper cliff trails — steep stone stairways, hanging plank roads, and panoramic gorge lookouts (about 6 hours on trail).",
+        "Off-the-beaten-path gorge hike along a remote tributary valley; picnic lunch and a home-cooked farm dinner with a local family.",
+        "Recovery morning — gentle riverside walk or tea tasting before your departure transfer."
+      ]
     },
     {
       priceKey: "grandLoop",
@@ -132,7 +190,16 @@ export default function Tours() {
       duration: "7 Days / 6 Nights",
       highlights: ["Everything Enshi", "All Major Canyons", "In-depth Culture"],
       images: ["/enshi-8.jpg", "/enshi-2.jpg", "/tenglong-3.jpg"],
-      description: "The complete, uncompromising experience. See every corner of the prefecture with premium transport, deep insights, and maximum flexibility."
+      description: "The complete, uncompromising experience. See every corner of the prefecture with premium transport, deep insights, and maximum flexibility.",
+      itinerary: [
+        "Arrive in Enshi, free pickup, welcome dinner, and a full trip briefing with your guide.",
+        "Enshi Grand Canyon — cliff plank roads, the One Incense Pillar, and a cable-car ride above the clouds.",
+        "Pingshan Canyon floating-boat ride in the morning; Tusi City cultural deep-dive in the afternoon.",
+        "Tenglong Cave — the giant entrance, the underground river, and the evening light show.",
+        "Suobuya Stone Forest maze in the morning, plus an alpine tea plantation visit and tasting in the afternoon.",
+        "Tujia village immersion — folk customs and a family lunch, then an evening in Xuan'en for the illuminated Gongshui riverfront.",
+        "Leisurely morning and souvenir shopping before your departure transfer."
+      ]
     }
   ];
 

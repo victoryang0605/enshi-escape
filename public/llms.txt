@@ -8,12 +8,12 @@
 - [Traveler reviews](https://www.enshiescape.com/guestbook) — stories from international travelers.
 
 ## Travel guides (crawler-friendly static versions)
-- [Enshi travel guide index](https://www.enshiescape.com/guide) — all articles in plain HTML.
-- [Best time to visit Enshi](https://www.enshiescape.com/guide/best-time-to-visit-enshi)
-- [Top 5 hiking trails in the Enshi Grand Canyon](https://www.enshiescape.com/guide/top-5-hiking-trails-grand-canyon)
-- [Tujia minority cuisine: what to eat](https://www.enshiescape.com/guide/tujia-cuisine-what-to-eat)
-- [Where to stay: boutique hotels vs. villages](https://www.enshiescape.com/guide/where-to-stay-hotels-vs-villages)
-- [How to get to Pingshan Canyon](https://www.enshiescape.com/guide/how-to-get-to-pingshan-canyon)
+- [Enshi travel guide index](https://www.enshiescape.com/enshi-travel-guide) — all articles in plain HTML.
+- [Best time to visit Enshi](https://www.enshiescape.com/enshi-travel-guide/best-time-to-visit-enshi)
+- [Top 5 hiking trails in the Enshi Grand Canyon](https://www.enshiescape.com/enshi-travel-guide/top-5-hiking-trails-grand-canyon)
+- [Tujia minority cuisine: what to eat](https://www.enshiescape.com/enshi-travel-guide/tujia-cuisine-what-to-eat)
+- [Where to stay: boutique hotels vs. villages](https://www.enshiescape.com/enshi-travel-guide/where-to-stay-hotels-vs-villages)
+- [How to get to Pingshan Canyon](https://www.enshiescape.com/enshi-travel-guide/how-to-get-to-pingshan-canyon)
 
 ## Good to know
 - [FAQ: weather, transport, prices, booking, visa](https://www.enshiescape.com/faq)

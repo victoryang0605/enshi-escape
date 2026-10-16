@@ -124,7 +124,7 @@ async function startServer() {
     let dynamicUrls = '';
 
     // Generate URLs from Notion articles if available in cache
-    // (static /guide/* versions are crawler-friendly; SPA versions kept for users)
+    // (static /enshi-travel-guide/* versions are crawler-friendly; SPA versions kept for users)
     if (cache.articlesList.data) {
       dynamicUrls = cache.articlesList.data.map((article: any) => `
   <url>
@@ -133,7 +133,7 @@ async function startServer() {
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>${baseUrl}/guide/${article.slug}</loc>
+    <loc>${baseUrl}/enshi-travel-guide/${article.slug}</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>`).join('');
@@ -172,7 +172,7 @@ async function startServer() {
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>${baseUrl}/guide</loc>
+    <loc>${baseUrl}/enshi-travel-guide</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>${dynamicUrls}
@@ -506,7 +506,7 @@ ${jsonLd}
 <style>${GUIDE_CSS}</style>
 </head>
 <body>
-<header class="site"><a href="https://www.enshiescape.com/">ENSHI ESCAPES</a> &nbsp;·&nbsp; <a href="https://www.enshiescape.com/enshi-tours">Tours</a> &nbsp;·&nbsp; <a href="https://www.enshiescape.com/guide">Travel Guide</a> &nbsp;·&nbsp; <a href="https://www.enshiescape.com/contact">Plan Your Trip</a></header>
+<header class="site"><a href="https://www.enshiescape.com/">ENSHI ESCAPES</a> &nbsp;·&nbsp; <a href="https://www.enshiescape.com/enshi-tours">Tours</a> &nbsp;·&nbsp; <a href="https://www.enshiescape.com/enshi-travel-guide">Travel Guide</a> &nbsp;·&nbsp; <a href="https://www.enshiescape.com/contact">Plan Your Trip</a></header>
 <div class="wrap">${opts.body}</div>
 <footer>© ${new Date().getFullYear()} Enshi Escapes Travel Co. — Crawler-friendly version of our travel guide.</footer>
 </body>
@@ -521,20 +521,26 @@ ${jsonLd}
       <a href="https://www.enshiescape.com/contact">Get a Free Quote</a>
     </div>`;
 
+  // Legacy /guide URLs → canonical /enshi-travel-guide (301, avoids duplicate content)
+  app.get("/guide", (_req, res) => res.redirect(301, "/enshi-travel-guide"));
+  app.get("/guide/:slug", (req, res) =>
+    res.redirect(301, `/enshi-travel-guide/${encodeURIComponent(req.params.slug)}`)
+  );
+
   // Static guide index
-  app.get("/guide", async (req, res) => {
+  app.get("/enshi-travel-guide", async (req, res) => {
     try {
       const articles = await resolveStaticArticles();
       const cards = articles.map((a) => `
         <div class="card">
-          <a href="/guide/${encodeURIComponent(a.slug)}"><h2>${escapeHtml(a.title)}</h2></a>
+          <a href="/enshi-travel-guide/${encodeURIComponent(a.slug)}"><h2>${escapeHtml(a.title)}</h2></a>
           <p>${escapeHtml(a.excerpt)}</p>
           <div class="meta">${escapeHtml(a.category)} · ${escapeHtml(a.date)}</div>
         </div>`).join("");
       res.send(guidePageShell({
         title: "Enshi Travel Guide | Best Time, Things to Do, Where to Stay",
         description: "Expert tips on traveling to Enshi, Hubei: best time to visit, top attractions, local food and transportation.",
-        canonical: "https://www.enshiescape.com/guide",
+        canonical: "https://www.enshiescape.com/enshi-travel-guide",
         body: `<h1>Enshi Travel Guide</h1><p>Your essential resources for exploring China's hidden landscapes — written by local experts for international explorers.</p>${cards}${ctaBox}`,
         jsonLd: {
           "@context": "https://schema.org",
@@ -543,7 +549,7 @@ ${jsonLd}
           itemListElement: articles.map((a, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            url: `https://www.enshiescape.com/guide/${a.slug}`,
+            url: `https://www.enshiescape.com/enshi-travel-guide/${a.slug}`,
             name: a.title,
           })),
         },
@@ -555,7 +561,7 @@ ${jsonLd}
   });
 
   // Static guide article
-  app.get("/guide/:slug", async (req, res) => {
+  app.get("/enshi-travel-guide/:slug", async (req, res) => {
     try {
       const articles = await resolveStaticArticles();
       const article = articles.find((a) => a.slug === req.params.slug);
@@ -563,8 +569,8 @@ ${jsonLd}
         return res.status(404).send(guidePageShell({
           title: "Article not found | Enshi Escapes",
           description: "The requested travel guide article could not be found.",
-          canonical: "https://www.enshiescape.com/guide",
-          body: `<h1>Article not found</h1><p>The article you're looking for doesn't exist. <a href="/guide">Browse all travel guides</a>.</p>`,
+          canonical: "https://www.enshiescape.com/enshi-travel-guide",
+          body: `<h1>Article not found</h1><p>The article you're looking for doesn't exist. <a href="/enshi-travel-guide">Browse all travel guides</a>.</p>`,
         }));
       }
       const markdown = await resolveStaticArticleMarkdown(article);
@@ -575,7 +581,7 @@ ${jsonLd}
       res.send(guidePageShell({
         title: `${article.title} | Enshi Escapes`,
         description: article.excerpt || `Travel guide: ${article.title}`,
-        canonical: `https://www.enshiescape.com/guide/${encodeURIComponent(article.slug)}`,
+        canonical: `https://www.enshiescape.com/enshi-travel-guide/${encodeURIComponent(article.slug)}`,
         body: `
           <h1>${escapeHtml(article.title)}</h1>
           <div class="meta">${escapeHtml(article.category)} · ${escapeHtml(article.date)}</div>
@@ -591,7 +597,7 @@ ${jsonLd}
           datePublished: article.date,
           author: { "@type": "Organization", name: "Enshi Escapes", url: "https://www.enshiescape.com/" },
           publisher: { "@type": "Organization", name: "Enshi Escapes", url: "https://www.enshiescape.com/" },
-          mainEntityOfPage: `https://www.enshiescape.com/guide/${article.slug}`,
+          mainEntityOfPage: `https://www.enshiescape.com/enshi-travel-guide/${article.slug}`,
         },
       }));
     } catch (e) {

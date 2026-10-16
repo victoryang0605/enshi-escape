@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { PRICING, formatTourPrice, formatCarPrice, formatGuidePrice } from '../data/pricing';
-import { BreadcrumbJsonLd } from '../components/Seo';
+import { BreadcrumbJsonLd, TouristTripsJsonLd } from '../components/Seo';
 
 // A sub-component to handle the image carousel state for each individual card
 function TourCard({ tour, index }: { tour: any, index: number }) {
@@ -210,6 +210,15 @@ export default function Tours() {
         <meta name="description" content="Handcrafted 3 to 7-day Enshi itineraries: Grand Canyon, hidden waters, Tujia culture. See starting prices and customize your private tour with English-speaking guides." />
       </Helmet>
       <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Enshi Tours", path: "/enshi-tours" }]} />
+      <TouristTripsJsonLd trips={tours.map((t: any) => ({
+        title: t.title,
+        description: t.description,
+        duration: t.duration,
+        priceRange: PRICING.tours[t.priceKey].range,
+        priceMin: 500,
+        priceMax: 800,
+        itinerary: t.itinerary || [],
+      }))} />
 
       <section className="pt-20 pb-24 bg-theme-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -118,3 +118,59 @@ export function TouristAttractionsJsonLd({ attractions }: { attractions: Attract
     </Helmet>
   );
 }
+
+export interface Trip {
+  title: string;
+  description: string;
+  duration: string;
+  priceRange: string;
+  priceMin: number;
+  priceMax: number;
+  itinerary: string[];
+}
+
+/** TouristTrip JSON-LD (ItemList) for the tours page. */
+export function TouristTripsJsonLd({ trips }: { trips: Trip[] }) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Enshi private tours",
+    itemListElement: trips.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "TouristTrip",
+        name: t.title,
+        description: t.description,
+        touristType: "International travelers",
+        provider: { "@id": `${SITE_URL}/#organization` },
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            minPrice: t.priceMin,
+            maxPrice: t.priceMax,
+            priceCurrency: "USD",
+          },
+          availability: "https://schema.org/InStock",
+        },
+        itinerary: {
+          "@type": "ItemList",
+          numberOfItems: t.itinerary.length,
+          itemListElement: t.itinerary.map((d, j) => ({
+            "@type": "ListItem",
+            position: j + 1,
+            name: `Day ${j + 1}`,
+            description: d,
+          })),
+        },
+      },
+    })),
+  };
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(data)}</script>
+    </Helmet>
+  );
+}

@@ -57,7 +57,7 @@ export const TEAM: TeamMember[] = [
   {
     name: "Li Tianya",
     role: "Partner Guide · Gold-Medal Guide",
-    photo: "",
+    photo: "/team/liyintian.jpg",
     bio: "An Enshi gold-medal guide with over a decade of experience and zero valid complaints on record. He serves as vice-chair of the Enshi guide association and famously bought 60 earpiece audio-guide sets for his guests to use free of charge.",
     languages: ["Chinese (Mandarin)"],
     specialties: ["Tenglong Cave", "Xuan'en slow travel", "Selenium culture"],

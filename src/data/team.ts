@@ -25,7 +25,7 @@ export const TEAM: TeamMember[] = [
   {
     name: "Xiang Hongxin",
     role: "Partner Guide · Enshi Grand Canyon",
-    photo: "",
+    photo: "/team/xianghongxin1.png",
     bio: "A Grand Canyon local born in 1991, Xiang became known as Enshi's first travel livestreamer and now has over a million followers. She won both the Enshi and Hubei provincial guide competitions in 2023 and was named to Hubei's first 'Zhiyin Famous Guide' talent pool.",
     languages: ["Chinese (Mandarin)"],
     specialties: ["Full-region tours", "Tujia culture", "Livestream guiding"],

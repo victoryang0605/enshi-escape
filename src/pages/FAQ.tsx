@@ -85,6 +85,42 @@ export default function FAQ() {
     {
       q: "Do you offer airport pickup?",
       a: "Yes — and it's free. We monitor your flight or train and greet you with English signage right at the arrivals hall, at Enshi Xujiaping Airport (ENH) or Enshi Railway Station. Airport pickup is included free of charge with any private car charter."
+    },
+    {
+      q: "Is Enshi worth visiting? How many days do I need?",
+      a: "Yes — if you love big canyon scenery but not Zhangjiajie-scale crowds. Enshi Grand Canyon rivals its famous neighbor, yet most international travelers have never heard of the region. Three days covers the essentials (Grand Canyon, Tenglong Cave or Pingshan Canyon, Tujia Daughter City); four to five days adds Pingshan Canyon, Suobuya Stone Forest and a buffer day for weather. One day is not enough — the sights are spread across the mountains."
+    },
+    {
+      q: "Enshi or Zhangjiajie — which should I choose?",
+      a: "Both are spectacular karst landscapes, and Enshi actually sits between Chongqing and Zhangjiajie, so many travelers visit both in one trip. Choose Zhangjiajie for the Avatar pillars and its famous glass bridges; choose Enshi for equally dramatic canyons, one of the world's largest caves (Tenglong), the floating-boat canyon at Pingshan — and a fraction of the crowds and queues. Our travel guide has a full Enshi vs Zhangjiajie comparison if you are deciding between them."
+    },
+    {
+      q: "How do I get from Enshi city to Pingshan Canyon?",
+      a: "Pingshan Canyon is in Hefeng County, about 2.5–3 hours from Enshi city on winding mountain roads. By public transport, take a bus from Enshi to Hefeng (about 2.5 hours), then a local bus or taxi for the last 20 minutes — schedules are sparse and mostly in Chinese, so search the Chinese name 屏山旅游景区. Two local tricks: stay in Hefeng the night before to reach the boats early, and go on a sunny day, because the famous floating-boat effect needs clear water and sunlight. Most of our guests simply fold Pingshan into a private tour day and let the driver handle the mountain roads."
+    },
+    {
+      q: "Can I visit Enshi without speaking Chinese?",
+      a: "Yes — many travelers do, but arrive prepared. English is rarely spoken outside international hotels, and signs, ticket machines and menus are mostly Chinese. What works: a translation app with the offline Chinese pack downloaded, your hotel address saved in Chinese characters, Alipay set up before you land, and screenshots of your destination names. For the sights themselves, an English-speaking guide or driver removes nearly all the friction — and our guide service includes a free AI translator device trial, handy for chatting with locals in remote villages."
+    },
+    {
+      q: "Do I need a private driver in Enshi?",
+      a: "For most visitors, yes. Enshi's headline sights fan out in different directions across mountainous terrain: the Grand Canyon is about 1.5 hours from the city, Tenglong Cave about 1.5 hours west, Pingshan Canyon 2.5–3 hours south — and no trains go to any of them. Intercity buses exist but run on sparse, Chinese-only schedules. A private car lets you chain sights efficiently, stop for photos, and reshuffle days around the weather (see our charter prices above). Confident Mandarin speakers traveling on a budget can manage with buses; everyone else saves significant time and stress with a driver."
+    },
+    {
+      q: "What happens if it rains or it's foggy?",
+      a: "Mountain weather here is genuinely changeable, and canyon viewpoints can disappear into fog — the single most common disappointment for visitors who allow only one day. Our private itineraries are built to flex: we watch the forecast and swap the order of sights (Tenglong Cave is weather-proof, while Pingshan needs sun for its clear-water effect), and one built-in buffer day makes a washed-out trip very unlikely. Note that July–August brings the heaviest rain."
+    },
+    {
+      q: "Should I stay in Enshi city or near the Grand Canyon?",
+      a: "Both work, and many guests do a night of each. Enshi city has the best hotels, restaurants and evening life (including Tujia Daughter City), but the Grand Canyon is a 1.5-hour drive away in the morning. Staying near the canyon entrance means an early, crowd-free start and crisp mountain air, with simpler dining options. If you are also visiting Tenglong Cave or Pingshan Canyon, the city is the more practical base because the sights fan out in different directions."
+    },
+    {
+      q: "What is the best month to visit Enshi? How is November?",
+      a: "April–June and September–November are the sweet spots. November specifically is underrated: canyon forests turn red and gold from late October into mid-November, crowds thin out, and temperatures are cool rather than cold — typically around 7–15°C in the city and colder up in the canyon, so bring a warm layer. Morning fog is possible but usually lifts by midday. December–February is the quiet, cold season, with occasional snow on the peaks."
+    },
+    {
+      q: "How do I get to Enshi from Chongqing, Zhangjiajie or Wuhan?",
+      a: "Chongqing: direct bullet trains from Chongqing North take about 2.5 hours, with around 40 departures a day — the easiest hop. Wuhan: direct high-speed trains take about 2 hours. Zhangjiajie: there is no direct high-speed train; by road it is roughly 4–5 hours, so most travelers pair the two with a private transfer or a train journey with a change en route. Enshi sits right on the Chongqing–Wuhan rail corridor, which also makes it an easy add-on to a Yangtze River itinerary."
     }
   ];
 

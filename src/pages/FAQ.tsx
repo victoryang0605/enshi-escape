@@ -83,6 +83,22 @@ export default function FAQ() {
       a: `English-speaking guides are ${formatGuidePrice()}. ${PRICING.guide.note} — handy for chatting with locals in remote villages.`
     },
     {
+      q: "Why does an English-speaking guide cost $400 a day?",
+      a: "Three things are priced into the day. First, fluent English throughout the day — not just a greeting, but geology, Tujia culture, tickets, menus and local conversations handled in English, in a region where English is rarely spoken outside international hotels. Second, a guide dedicated to your party only, for the full day — not shared with other travelers. Third, a day that flexes: the order of sights can change around weather and your pace. For comparison, travelers on Reddit have reported paying roughly $150–300 a day for local Chinese-speaking guides. That figure is what other travelers reported, not a verified market rate, and it generally covers a Chinese-speaking guide without the English communication described above."
+    },
+    {
+      q: "Is the car included in the guide price?",
+      a: `No — they are two separate lines. The guide is ${formatGuidePrice()}; a private car with driver is ${formatCarPrice()}. Booked together, they form a private day: one guide, one vehicle, one itinerary. ${PRICING.privateCar.airportPickup}.`
+    },
+    {
+      q: "Can we change the plan during the trip?",
+      a: "Yes. Private days are built to flex. If fog closes a canyon viewpoint, we swap the order — Tenglong Cave is weather-proof, while Pingshan Canyon needs sun for its clear-water effect — and one buffer day in longer itineraries makes a washed-out trip unlikely. You set the pace; there is no fixed group schedule to keep."
+    },
+    {
+      q: "Do we need both a guide and a car?",
+      a: "For most visitors, yes, and for different reasons. The car solves distance: the sights fan out 1.5–3 hours in different directions with no trains to any of them. The guide solves language and meaning: English explanations, tickets, menus and local conversations. Either alone leaves half the trip friction in place."
+    },
+    {
       q: "Do you offer airport pickup?",
       a: "Yes — and it's free. We monitor your flight or train and greet you with English signage right at the arrivals hall, at Enshi Xujiaping Airport (ENH) or Enshi Railway Station. Airport pickup is included free of charge with any private car charter."
     },

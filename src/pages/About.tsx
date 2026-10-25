@@ -60,7 +60,7 @@ export default function About() {
                 Meet the Team
               </h2>
               <p className="text-[15px] text-[#777] mt-4 max-w-2xl mx-auto leading-[1.7]">
-                Local experts and bilingual guides who will be with you every step of the journey.
+                Local experts and bilingual guides who stay with your party for the whole journey — one guide, one vehicle, one itinerary that flexes with the weather.
               </p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">

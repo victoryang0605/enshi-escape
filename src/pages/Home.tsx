@@ -20,13 +20,13 @@ export default function Home() {
     {
       icon: <Car className="w-8 h-8 text-theme-primary" />,
       title: "Private Chartered Vehicles",
-      description: "Travel comfortably through mountain roads in clean, modern vehicles with experienced professional drivers.",
+      description: "Your own vehicle and driver for the day — no bus schedules, no fixed departure times. Clean, modern vehicles with experienced local drivers who know every mountain road. Airport pickup included free of charge.",
       price: `${formatCarPrice()} (${PRICING.privateCar.vehicles}, ${PRICING.privateCar.seats})`
     },
     {
       icon: <Users className="w-8 h-8 text-theme-primary" />,
       title: "Bilingual Cultural Guides",
-      description: "Break the language barrier. Our fluent English-speaking locals offer deep insights into Tujia culture and history.",
+      description: "A fluent English-speaking local guide, dedicated to your party for the full day. Geology, Tujia culture, tickets, menus and local conversations — all handled in English, at your pace, with the day's order free to change around the weather.",
       price: `${formatGuidePrice()} · ${PRICING.guide.note}`
     },
     {

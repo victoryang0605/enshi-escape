@@ -251,14 +251,14 @@ export default function Tours() {
               <div className="p-8 border-l-[1px] border-theme-accent bg-[#fff]">
                 <h3 className="font-serif text-[20px] text-theme-primary mb-2">Private Car Charter</h3>
                 <p className="text-[14px] text-[#777] leading-[1.6] mb-3">
-                  {PRICING.privateCar.vehicles}, {PRICING.privateCar.seats}, {PRICING.privateCar.mileage}. {PRICING.privateCar.airportPickup}.
+                  {PRICING.privateCar.vehicles}, {PRICING.privateCar.seats}, {PRICING.privateCar.mileage}. Your driver knows every mountain curve in Enshi and waits for you at each stop — the day runs on your schedule, not a timetable. {PRICING.privateCar.airportPickup}.
                 </p>
                 <p className="text-[18px] font-semibold text-theme-accent">{formatCarPrice()}</p>
               </div>
               <div className="p-8 border-l-[1px] border-theme-accent bg-[#fff]">
                 <h3 className="font-serif text-[20px] text-theme-primary mb-2">English-Speaking Guide</h3>
                 <p className="text-[14px] text-[#777] leading-[1.6] mb-3">
-                  Fluent local guides with deep Tujia culture insights. {PRICING.guide.note}.
+                  One fluent English-speaking local guide, assigned to your party only — not shared with other travelers. Your guide explains Enshi's geology and Tujia culture in English, handles tickets, transport and local conversations, and reshapes the day around weather and your pace. {PRICING.guide.note} — handy for chatting with locals in remote villages.
                 </p>
                 <p className="text-[18px] font-semibold text-theme-accent">{formatGuidePrice()}</p>
               </div>

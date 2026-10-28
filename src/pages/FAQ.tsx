@@ -12,7 +12,7 @@ export default function FAQ() {
     },
     {
       q: "When is the best time to visit?",
-      a: "April to June and September to November are ideal. The weather is mild, and the skies are generally clear. Summer (July-August) can be hot and humid with sudden rain, while winter brings cold temperatures but beautiful snow-capped mountains."
+      a: "April to June and September to November are ideal. The weather is mild, and the skies are generally clear. Summer (July-August) can be hot and humid with sudden rain, while winter brings cold temperatures but beautiful snow-capped mountains. Avoid the big holiday weeks (Chinese New Year, 1–5 May, 1–7 October) if you can: prices spike and popular sights need advance booking."
     },
     {
       q: "How do I get to Enshi?",
@@ -48,7 +48,7 @@ export default function FAQ() {
     },
     {
       q: "Do I need a visa to visit Enshi?",
-      a: "Enshi follows China's national visa policy. Many nationalities can enter China visa-free for short stays — check the latest policy for your passport before booking. If you need an invitation letter for a visa application, we are happy to provide one for confirmed bookings."
+      a: "Enshi follows China's national visa policy. Many nationalities can enter China visa-free for short stays — check the latest policy for your passport before booking. If you need an invitation letter for a visa application, we are happy to provide one for confirmed bookings. Note the three routes travellers often confuse: 30-day visa-free entry, bilateral visa-free agreements, and the 240-hour (10-day) transit scheme, which requires an onward journey to a third country or region — old '144-hour' pages are out of date."
     },
     {
       q: "How does mobile payment work in China for foreigners?",
@@ -137,6 +137,14 @@ export default function FAQ() {
     {
       q: "How do I get to Enshi from Chongqing, Zhangjiajie or Wuhan?",
       a: "Chongqing: direct bullet trains from Chongqing North take about 2.5 hours, with around 40 departures a day — the easiest hop. Wuhan: direct high-speed trains take about 2 hours. Zhangjiajie: there is no direct high-speed train; by road it is roughly 4–5 hours, so most travelers pair the two with a private transfer or a train journey with a change en route. Enshi sits right on the Chongqing–Wuhan rail corridor, which also makes it an easy add-on to a Yangtze River itinerary."
+    },
+    {
+      q: "Will my phone and apps work in Enshi?",
+      a: "Buy a roaming eSIM that routes outside mainland China (typically via Hong Kong or Singapore) so Google, WhatsApp, Gmail and Instagram keep working — and test it at home. Install a VPN as a backup before departure too; VPN websites are hard to reach once inside China. A local SIM bought at the airport is cheaper but stays inside the firewall. Mobile signal can also be weak in valleys and villages, so download offline maps for Enshi before you leave."
+    },
+    {
+      q: "What should I pack that visitors often forget?",
+      a: "Your passport — the original, not a photo — for trains, hotels and ticketed sights. Tissues and hand sanitiser: public toilets in smaller towns often have neither, and squat toilets are normal outside cities. A dietary or allergy card in Chinese and English if relevant — show it rather than explaining, and tell us your needs in advance so your guide can brief restaurants. And note that without a Chinese phone number you cannot use food-delivery apps, shared bikes or some mini-programs; that is normal, and your guide covers the gap."
     }
   ];
 

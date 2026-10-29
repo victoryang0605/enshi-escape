@@ -21,7 +21,11 @@ async function startServer() {
   const app = express();
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
-  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+  const parsedPort = parseInt(process.env.PORT ?? "", 10);
+  if (process.env.PORT && Number.isNaN(parsedPort)) {
+    console.warn(`Invalid PORT value "${process.env.PORT}", falling back to 3000`);
+  }
+  const PORT = Number.isNaN(parsedPort) ? 3000 : parsedPort;
 
   // Initialize Notion components on the server where it's safe
   let notion: Client | null = null;

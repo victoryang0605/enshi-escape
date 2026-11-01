@@ -138,6 +138,19 @@ export default function BookingSystem() {
                 <option value="Above $3,000">Above $3,000</option>
               </select>
             </div>
+            <div>
+              <label className="block uppercase tracking-[1px] text-[11px] font-bold text-theme-ink mb-2">How did you hear about us? <span className="normal-case font-normal text-[#999]">(helps us know what's working)</span></label>
+              <select name="referralSource" className="w-full px-4 py-3 rounded-[4px] border border-[#ddd] focus:border-theme-primary outline-none transition-colors text-theme-ink bg-white">
+                <option value="Prefer not to say">Prefer not to say</option>
+                <option value="YouTube">YouTube</option>
+                <option value="TikTok">TikTok</option>
+                <option value="Reddit">Reddit</option>
+                <option value="Google search">Google search</option>
+                <option value="Travel creator / influencer">Travel creator / influencer</option>
+                <option value="Friend or family">Friend or family</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
 
             <motion.div 
               key={activeTab}

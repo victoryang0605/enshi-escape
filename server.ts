@@ -303,13 +303,13 @@ async function startServer() {
   // ============================================================
   // Inquiry email notifications via company SMTP.
   // Env: SMTP_HOST, SMTP_PORT (default 465), SMTP_USER, SMTP_PASS,
-  //      INQUIRY_NOTIFY_EMAIL (default zuhua.yang@slipstream.com.cn)
+  //      INQUIRY_NOTIFY_EMAIL (default service@slipstream.com.cn)
   // ============================================================
   const SMTP_HOST = process.env.SMTP_HOST;
   const SMTP_PORT = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 465;
   const SMTP_USER = process.env.SMTP_USER;
   const SMTP_PASS = process.env.SMTP_PASS;
-  const NOTIFY_EMAIL = process.env.INQUIRY_NOTIFY_EMAIL || "zuhua.yang@slipstream.com.cn";
+  const NOTIFY_EMAIL = process.env.INQUIRY_NOTIFY_EMAIL || "service@slipstream.com.cn";
   const smtpReady = () => !!(SMTP_HOST && SMTP_USER && SMTP_PASS);
 
   app.post("/api/inquiry", async (req, res) => {
@@ -370,7 +370,7 @@ async function startServer() {
           `and will reply within 12 hours with a tailored plan and quote.\n\n` +
           `Your request summary:\n${summary}\n\n` +
           `Need us sooner? Chat with us on WhatsApp: https://wa.me/qr/CHOCPAGHDAK4K1\n\n` +
-          `Warm regards,\nEnshi Escapes Team\nzuhua.yang@slipstream.com.cn`,
+          `Warm regards,\nEnshi Escapes Team\nservice@slipstream.com.cn`,
       });
 
       res.json({ success: true });

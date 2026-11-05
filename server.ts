@@ -4,6 +4,7 @@ import { Client } from "@notionhq/client";
 import { NotionToMarkdown } from "notion-to-md";
 import { marked } from "marked";
 import { articles as fallbackArticles } from "./src/data/articles";
+import { faqs as faqItems } from "./src/data/faq";
 import path from "path";
 import "dotenv/config";
 
@@ -44,6 +45,21 @@ async function startServer() {
     articleContent: new Map<string, { data: string; lastFetch: number }>()
   };
   const CACHE_TTL = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+  /** Format a human date ("Oct 12, 2025" / "2026-11-05") as YYYY-MM-DD for <lastmod>. */
+  function lastmodTag(dateStr: string): string {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    if (Number.isNaN(d.getTime())) return "";
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `<lastmod>${y}-${m}-${day}</lastmod>`;
+  }
+
+  /** AI/search crawlers that don't execute JavaScript — they get static HTML. */
+  const AI_CRAWLER_RE = /gptbot|chatgpt-user|oai-searchbot|claudebot|anthropic-ai|perplexitybot|ccbot|bytespider|applebot|google-extended|googlebot|duckassistbot|meta-externalagent|cohere-ai|bingbot/i;
+  const isAiCrawler = (req: any): boolean => AI_CRAWLER_RE.test(req.get("user-agent") || "");
   // We use the environment variable first, if it doesn't exist, we fallback to the hardcoded string
   const REVIEWS_DATABASE_ID = process.env.NOTION_REVIEWS_DATABASE_ID || "34ad7ce9506b80b091fcc1b7cab61bb7";
 
@@ -127,21 +143,16 @@ async function startServer() {
     const baseUrl = 'https://www.enshiescape.com';
     let dynamicUrls = '';
 
-    // Generate URLs from Notion articles if available in cache
+    // Article URLs from Notion (or local fallback) — canonical slug only, with lastmod.
     // (static /enshi-travel-guide/* versions are crawler-friendly; SPA versions kept for users)
-    if (cache.articlesList.data) {
-      dynamicUrls = cache.articlesList.data.map((article: any) => `
-  <url>
-    <loc>${baseUrl}/enshi-travel-guide/${article.slug}?id=${article.id}</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
+    const articles = await resolveStaticArticles();
+    dynamicUrls = articles.map((article: any) => `
   <url>
     <loc>${baseUrl}/enshi-travel-guide/${article.slug}</loc>
+    ${lastmodTag(article.date)}
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>`).join('');
-    }
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -174,15 +185,113 @@ async function startServer() {
     <loc>${baseUrl}/faq</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>${baseUrl}/enshi-travel-guide</loc>
-    <priority>0.9</priority>
-    <changefreq>weekly</changefreq>
   </url>${dynamicUrls}
 </urlset>`;
 
     res.send(xml);
+  });
+
+  // ============================================================
+  // GEO: llms.txt / llms-full.txt — generated live from the same
+  // article catalog as the sitemap, so they never go stale when a
+  // new guide is published in Notion.
+  // ============================================================
+  const LLMS_INTRO = "Enshi Escapes is a local travel agency in Enshi, Hubei, China, crafting private English-guided tours for international travelers — Enshi Grand Canyon, Pingshan Canyon, Tenglong Cave, Suobuya Stone Forest, Tusi City and Tujia culture.";
+
+  function llmsTxt(articles: any[]): string {
+    const lines = [
+      "# Enshi Escapes",
+      "",
+      `> ${LLMS_INTRO}`,
+      "",
+      "## Plan a trip",
+      "- [Custom Enshi tours (3–7 days)](https://www.enshiescape.com/enshi-tours) — private itineraries with English-speaking guides, from canyon hikes to cultural immersion.",
+      "- [Plan your trip / contact](https://www.enshiescape.com/contact) — free itinerary consultation; no payment required until the itinerary is confirmed.",
+      "- [Traveler reviews](https://www.enshiescape.com/guestbook) — stories from international travelers.",
+      "",
+      "## Travel guides",
+      "- [Enshi travel guide index](https://www.enshiescape.com/enshi-travel-guide) — all articles in plain HTML.",
+      ...articles.map((a) => `- [${a.title}](https://www.enshiescape.com/enshi-travel-guide/${a.slug})${a.excerpt ? ` — ${a.excerpt}` : ""}`),
+      "",
+      "## Good to know",
+      "- [FAQ: weather, transport, prices, booking, visa](https://www.enshiescape.com/faq) — answers to the questions international visitors ask most.",
+      "- [About Enshi Escapes](https://www.enshiescape.com/about)",
+      "",
+      "## Contact",
+      "- Email: service@slipstream.com.cn",
+      "- Based in Enshi City, Hubei Province, China. Mon–Sun 9:00–18:00 (Beijing Time).",
+      "",
+    ];
+    return lines.join("\n");
+  }
+
+  app.get("/llms.txt", async (_req, res) => {
+    try {
+      const articles = await resolveStaticArticles();
+      res.header("Content-Type", "text/plain; charset=utf-8");
+      res.send(llmsTxt(articles));
+    } catch (e) {
+      console.error("llms.txt failed", e);
+      res.status(500).send("llms.txt temporarily unavailable.");
+    }
+  });
+
+  app.get("/llms-full.txt", async (_req, res) => {
+    try {
+      const articles = await resolveStaticArticles();
+      const parts: string[] = [
+        "# Enshi Escapes — full content",
+        "",
+        `> ${LLMS_INTRO}`,
+        "",
+        "## Travel guides",
+        "",
+      ];
+      for (const a of articles) {
+        const md = await resolveStaticArticleMarkdown(a);
+        parts.push(`### ${a.title}`, "");
+        if (a.excerpt) parts.push(a.excerpt, "");
+        parts.push(md ? md.trim() : "_Content coming soon._", "");
+      }
+      parts.push("## FAQ", "");
+      for (const f of faqItems) {
+        parts.push(`### ${f.q}`, "", f.a, "");
+      }
+      parts.push("## Contact", "", "- Email: service@slipstream.com.cn", "- Based in Enshi City, Hubei Province, China. Mon–Sun 9:00–18:00 (Beijing Time).", "");
+      res.header("Content-Type", "text/plain; charset=utf-8");
+      res.send(parts.join("\n"));
+    } catch (e) {
+      console.error("llms-full.txt failed", e);
+      res.status(500).send("llms-full.txt temporarily unavailable.");
+    }
+  });
+
+  // GEO: static FAQ for crawlers. The SPA /faq renders client-side,
+  // which AI crawlers can't read — so crawler user-agents get the
+  // same Q&As as plain static HTML with FAQPage JSON-LD. Human
+  // visitors fall through to the SPA untouched.
+  app.get("/faq", (req, res, next) => {
+    if (!isAiCrawler(req)) return next();
+    const items = faqItems.map((f) => `
+      <div class="card">
+        <h2>${escapeHtml(f.q)}</h2>
+        <p>${escapeHtml(f.a)}</p>
+      </div>`).join("");
+    res.send(guidePageShell({
+      title: "Enshi Travel FAQ | Prices, Booking, Visa & Travel Tips",
+      description: "Answers about traveling to Enshi, China: tour prices, how to book, payment, cancellation, visa, mobile payment and best seasons. Free consultation available.",
+      canonical: "https://www.enshiescape.com/faq",
+      body: `<h1>Enshi Travel FAQ</h1><p>Everything international visitors ask us — prices, booking, payments, visas and practical tips for the mountains of Hubei.</p>${items}${ctaBox}`,
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    }));
   });
 
   // Reviews endpoints

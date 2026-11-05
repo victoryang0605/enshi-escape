@@ -145,6 +145,14 @@ export default function FAQ() {
     {
       q: "What should I pack that visitors often forget?",
       a: "Your passport — the original, not a photo — for trains, hotels and ticketed sights. Tissues and hand sanitiser: public toilets in smaller towns often have neither, and squat toilets are normal outside cities. A dietary or allergy card in Chinese and English if relevant — show it rather than explaining, and tell us your needs in advance so your guide can brief restaurants. And note that without a Chinese phone number you cannot use food-delivery apps, shared bikes or some mini-programs; that is normal, and your guide covers the gap."
+    },
+    {
+      q: "Is November a good time to visit Enshi? What if it's foggy?",
+      a: "Yes, with eyes open. November is fog season in these mountains — locals say so plainly — and canyon viewpoints can disappear into cloud. The upside is real: crowds thin out, canyon forests turn red and gold from late October into mid-November, and temperatures are cool rather than cold. The way to handle fog is not to hope it away but to plan around it: do not lock four rigid days, keep one buffer day, and order sights by the forecast. Tenglong Cave is weather-proof, so it fits foggy mornings; save the Grand Canyon viewpoints and Pingshan Canyon for the first clear morning. Our private days are built to flex exactly this way."
+    },
+    {
+      q: "How many days do I need if I'm visiting both Enshi and Zhangjiajie?",
+      a: "Plan 6–7 days in total. Enshi needs 2–3 nights (Grand Canyon, Tenglong Cave or Pingshan Canyon, plus a buffer day for fog), and Zhangjiajie needs 3 days (two in the national park, one for Tianmen Mountain), plus the transit day between them. For that transit, travelers have reported a direct bus for around ¥25 taking roughly 4 hours — that figure is what other travelers reported, not our price — while a private transfer is faster, door to door, and lets you reshuffle days around fog. One tip that keeps coming up: base in Wulingyuan for Zhangjiajie, and do not pre-book four rigid days there — keep the block loose and take the first clear morning into the park."
     }
   ];
 

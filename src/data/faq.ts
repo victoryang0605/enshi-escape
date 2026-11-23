@@ -7,6 +7,10 @@ export interface FaqItem {
 
 export const faqs: FaqItem[] = [
     {
+      q: "Can I fly a drone in Enshi Grand Canyon?",
+      a: "Yes, but you need to contact the scenic area in advance and only fly in the designated areas. Please note that signal inside the Grand Canyon can be poor and drones are prone to crashing. Any safety incidents resulting from this are the responsibility of the person flying the drone."
+    },
+    {
       q: "Do people speak English in Enshi?",
       a: "Outside of major international hotels, English is rarely spoken in Enshi. Navigating transportation, buying tickets, and ordering food can be a significant challenge for foreigners. This is why our services—providing bilingual drivers and guides—are essential for a stress-free trip."
     },
@@ -153,9 +157,5 @@ export const faqs: FaqItem[] = [
     {
       q: "How many days do I need if I'm visiting both Enshi and Zhangjiajie?",
       a: "Plan 6–7 days in total. Enshi needs 2–3 nights (Grand Canyon, Tenglong Cave or Pingshan Canyon, plus a buffer day for fog), and Zhangjiajie needs 3 days (two in the national park, one for Tianmen Mountain), plus the transit day between them. For that transit, travelers have reported a direct bus for around ¥25 taking roughly 4 hours — that figure is what other travelers reported, not our price — while a private transfer is faster, door to door, and lets you reshuffle days around fog. One tip that keeps coming up: base in Wulingyuan for Zhangjiajie, and do not pre-book four rigid days there — keep the block loose and take the first clear morning into the park."
-    },
-    {
-      q: "Can I fly a drone in Enshi Grand Canyon?",
-      a: "Yes, but you need to contact the scenic area in advance and only fly in the designated areas. Please note that signal inside the Grand Canyon can be poor and drones are prone to crashing. Any safety incidents resulting from this are the responsibility of the person flying the drone."
     }
   ];

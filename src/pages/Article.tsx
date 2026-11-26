@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useState, useEffect } from 'react';
 import { articles as localFallbackArticles } from '../data/articles';
+import { guideVideos } from '../data/guideVideos';
 import { fetchArticleContent, fetchArticles } from '../services/notionService';
 import { BreadcrumbJsonLd } from '../components/Seo';
 
@@ -111,6 +112,21 @@ export default function Article() {
                   </p>
                 )}
               </header>
+
+              {slug && guideVideos[slug] && (
+                <div className="mb-10">
+                  <div className={guideVideos[slug].kind === 'short' ? 'mx-auto max-w-[360px] aspect-[9/16]' : 'aspect-video w-full'}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${guideVideos[slug].videoId}`}
+                      title={guideVideos[slug].title}
+                      className="w-full h-full rounded-[4px] border border-[#eee]"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                  <p className="text-center text-[14px] text-[#888] mt-3">{guideVideos[slug].caption}</p>
+                </div>
+              )}
 
               <div className="markdown-body prose prose-lg prose-headings:font-serif prose-headings:text-theme-primary prose-a:text-theme-accent prose-p:text-[#444] leading-[1.8] overflow-x-auto">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>

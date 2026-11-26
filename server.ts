@@ -5,6 +5,7 @@ import { NotionToMarkdown } from "notion-to-md";
 import { marked } from "marked";
 import { articles as fallbackArticles } from "./src/data/articles";
 import { faqs as faqItems } from "./src/data/faq";
+import { guideVideos } from "./src/data/guideVideos";
 import path from "path";
 import "dotenv/config";
 
@@ -85,7 +86,7 @@ async function startServer() {
         sorts: [{ property: 'Date', direction: 'descending' }],
       });
 
-      const articles = response.results.map((page: any) => ({
+      const articles = dedupeBySlug(response.results.map((page: any) => ({
         id: page.id,
         slug: page.properties.Slug?.rich_text?.[0]?.plain_text || page.id,
         title: page.properties.Name?.title?.[0]?.plain_text || 'Untitled',
@@ -93,7 +94,7 @@ async function startServer() {
         category: page.properties.Category?.select?.name || 'Uncategorized',
         date: page.properties.Date?.date?.start || 'Unknown Date',
         alt: page.properties.ALT?.rich_text?.[0]?.plain_text || page.properties.Name?.title?.[0]?.plain_text || 'Enshi travel guide image',
-      }));
+      })));
 
       // Update Cache
       cache.articlesList.data = articles;
@@ -530,6 +531,16 @@ async function startServer() {
     date: string;
   }
 
+  /** Drop duplicate slugs (same article published twice in Notion) — keep the first (newest; lists are Date desc). */
+  function dedupeBySlug<T extends { slug: string }>(items: T[]): T[] {
+    const seen = new Set<string>();
+    return items.filter((a) => {
+      if (seen.has(a.slug)) return false;
+      seen.add(a.slug);
+      return true;
+    });
+  }
+
   async function resolveStaticArticles(): Promise<StaticArticle[]> {
     if (notion && DATABASE_ID) {
       try {
@@ -541,14 +552,14 @@ async function startServer() {
           filter: { property: 'Status', select: { equals: 'Published' } },
           sorts: [{ property: 'Date', direction: 'descending' }],
         });
-        const articles = response.results.map((page: any) => ({
+        const articles = dedupeBySlug(response.results.map((page: any) => ({
           id: page.id,
           slug: page.properties.Slug?.rich_text?.[0]?.plain_text || page.id,
           title: page.properties.Name?.title?.[0]?.plain_text || 'Untitled',
           excerpt: page.properties.Excerpt?.rich_text?.[0]?.plain_text || '',
           category: page.properties.Category?.select?.name || 'Uncategorized',
           date: page.properties.Date?.date?.start || 'Unknown Date',
-        }));
+        })));
         cache.articlesList.data = articles;
         cache.articlesList.lastFetch = Date.now();
         return articles;
@@ -557,14 +568,14 @@ async function startServer() {
       }
     }
     // Fallback: local articles (works even without NOTION_API_KEY)
-    return fallbackArticles.map((a) => ({
+    return dedupeBySlug(fallbackArticles.map((a) => ({
       id: a.slug,
       slug: a.slug,
       title: a.title,
       excerpt: a.excerpt,
       category: a.category,
       date: a.date,
-    }));
+    })));
   }
 
   async function resolveStaticArticleMarkdown(article: StaticArticle): Promise<string> {
@@ -601,6 +612,11 @@ async function startServer() {
     .card p{color:#666;margin:0 0 8px}
     .cta{background:#f4f1e8;border:1px solid #e5e2d8;border-radius:6px;padding:24px;text-align:center;margin-top:40px}
     .cta a{display:inline-block;background:#4a5d4e;color:#fff;padding:12px 28px;border-radius:4px;text-decoration:none;font-family:Arial,sans-serif;font-weight:bold;margin:4px}
+    .video-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:0 0 12px;border-radius:6px}
+    .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+    .video-embed-short{max-width:360px;margin:0 auto 12px;aspect-ratio:9/16;border-radius:6px;overflow:hidden}
+    .video-embed-short iframe{width:100%;height:100%;border:0}
+    .video-caption{color:#888;font-size:14px;text-align:center;margin:0 0 28px;font-family:Arial,sans-serif}
     footer{color:#999;font-size:13px;text-align:center;padding:24px;font-family:Arial,sans-serif}
   `;
 
@@ -692,6 +708,15 @@ ${jsonLd}
       // Demote any h1 inside the article body to h2 — the page already has its own h1.
       htmlBody = htmlBody.replace(/<h1(\s|>)/g, "<h2$1").replace(/<\/h1>/g, "</h2>");
       const spaUrl = `https://www.enshiescape.com/enshi-travel-guide/${encodeURIComponent(article.slug)}`;
+      // Video for this guide, if one is mapped in src/data/guideVideos.ts.
+      const video = guideVideos[article.slug];
+      const videoEmbed = video
+        ? `
+          <div class="${video.kind === "short" ? "video-embed-short" : "video-embed"}">
+            <iframe src="https://www.youtube.com/embed/${video.videoId}" title="${escapeHtml(video.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <p class="video-caption">${escapeHtml(video.caption)}</p>`
+        : "";
       res.send(guidePageShell({
         title: `${article.title} | Enshi Escapes`,
         description: article.excerpt || `Travel guide: ${article.title}`,
@@ -700,6 +725,7 @@ ${jsonLd}
           <h1>${escapeHtml(article.title)}</h1>
           <div class="meta">${escapeHtml(article.category)} · ${escapeHtml(article.date)}</div>
           ${article.excerpt ? `<p><em>${escapeHtml(article.excerpt)}</em></p>` : ""}
+          ${videoEmbed}
           <div class="article-body">${htmlBody}</div>
           <p style="font-family:Arial,sans-serif;font-size:14px;color:#888">Prefer the interactive version? <a href="${spaUrl}">Read this article on enshiescape.com →</a></p>
           ${ctaBox}`,
@@ -712,6 +738,20 @@ ${jsonLd}
           author: { "@type": "Organization", name: "Enshi Escapes", url: "https://www.enshiescape.com/" },
           publisher: { "@type": "Organization", name: "Enshi Escapes", url: "https://www.enshiescape.com/" },
           mainEntityOfPage: `https://www.enshiescape.com/enshi-travel-guide/${article.slug}`,
+          ...(video
+            ? {
+                video: {
+                  "@type": "VideoObject",
+                  name: video.title,
+                  description: video.caption,
+                  thumbnailUrl: `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`,
+                  uploadDate: video.uploadDate,
+                  duration: video.duration,
+                  embedUrl: `https://www.youtube.com/embed/${video.videoId}`,
+                  contentUrl: `https://www.youtube.com/watch?v=${video.videoId}`,
+                },
+              }
+            : {}),
         },
       }));
     } catch (e) {
